@@ -12,14 +12,8 @@
     if(userID.equals("jjang051") && userPW.equals("1234")) {
         response.sendRedirect("login_success.jsp");
     } else {
-        //아닐때 자바스크립트 띄우고 뒤로 보내기...
+        out.println("<script>alert(\"아이디 비밀번호 확인해 주세요.\");" +
+                    "history.back();</script>"
+        );
     }
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
