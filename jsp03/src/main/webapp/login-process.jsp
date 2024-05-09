@@ -13,6 +13,7 @@
     System.out.println(saveID);
     // 쿠키설정해서 saveID에다가 값을 설정해두면 된다.
     if(userID.equals("jjang051") && userPW.equals("1234")){
+        session.setAttribute("sessionUserID",userID);
         //로그인 성공
         if(saveID!=null && saveID.equals("yes")) {
             CookieManager.createCookie(response,"memoID",userID,60*60*24*365);
