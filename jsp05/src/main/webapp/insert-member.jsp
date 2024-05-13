@@ -39,6 +39,19 @@
              method:"post",
              success:function(data) {
                  console.log(data);
+                 if(data.count>0) {
+                     alert("쓸 수 없는 아이디입니다.");
+                     $("#userID").val("");
+                     $("#userID").focus();
+                 } else {
+                     const used = confirm("쓸 수 있는 아이디입니다. 사용하시겠습니까?");
+                     if(used) {
+                        $("#userID").attr("readonly",true);
+                     } else {
+                         $("#userID").val("");
+                         $("#userID").focus();
+                     }
+                 }
              },
              fail:function(error) {
                  console.log(error);
