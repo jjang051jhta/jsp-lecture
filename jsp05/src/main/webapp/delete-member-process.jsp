@@ -2,7 +2,9 @@
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="com.jjang051.jsp04.utils.CookieManager" %><%--
+<%@ page import="com.jjang051.jsp05.utils.CookieManager" %>
+<%@ page import="com.jjang051.jsp05.connect.JDBCConnect" %>
+<%@ page import="com.jjang051.jsp05.utils.ScriptWriter" %><%--
   Created by IntelliJ IDEA.
   User: JHTA
   Date: 2024-05-10
@@ -16,11 +18,9 @@
     String userPW = request.getParameter("userPW");
     System.out.println(userID+"==="+userPW);
 
-    Class.forName("oracle.jdbc.OracleDriver");
-    Connection conn =
-            DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","jhta051","1234");
+    JDBCConnect jdbcConnect = new JDBCConnect();
     String sql =  "delete from member where userId = ? and userPw = ?";
-    PreparedStatement pstmt = conn.prepareStatement(sql);
+    PreparedStatement pstmt = jdbcConnect.conn.prepareStatement(sql);
     pstmt.setString(1,userID);
     pstmt.setString(2,userPW);
 
@@ -30,7 +30,8 @@
     if(result>0) {
         session.invalidate();
         CookieManager.deleteCookie(response,"loggedID");
-        out.println("<script>alert("+result+");location.href=\"index.jsp\";</script>");
+        ScriptWriter.alertAndNext(response,"회원탈퇴되었습니다.","index.jsp");
+        //out.println("<script>alert("+result+");location.href=\"index.jsp\";</script>");
 
     }
 

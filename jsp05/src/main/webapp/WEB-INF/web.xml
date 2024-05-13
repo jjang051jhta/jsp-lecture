@@ -16,7 +16,7 @@
         <param-value>jhta051</param-value>
     </context-param>
     <context-param>
-        <param-name>OraclePwd</param-name>
+        <param-name>OraclePassword</param-name>
         <param-value>1234</param-value>
     </context-param>
 </web-app>
