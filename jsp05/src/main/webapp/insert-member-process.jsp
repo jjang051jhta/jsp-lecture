@@ -2,7 +2,8 @@
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="com.jjang051.jsp05.connect.JDBCConnect" %>
-<%@ page import="com.jjang051.jsp05.utils.ScriptWriter" %><%--
+<%@ page import="com.jjang051.jsp05.utils.ScriptWriter" %>
+<%@ page import="com.jjang051.jsp05.connect.JDBCConnectionPool" %><%--
   Created by IntelliJ IDEA.
   User: JHTA
   Date: 2024-05-10
@@ -26,11 +27,13 @@
     JDBCConnect jdbcConnect = new JDBCConnect(driver, url, id, password);*/
     //설정파일 web.xml 바꾼거니까 서버 재가동 하는게 좋다.
     // web.xml에 아이디 비밀번호 저장해두고 쓰기...
-    JDBCConnect jdbcConnect = new JDBCConnect(application);
-
+    //JDBCConnect jdbcConnect = new JDBCConnect(application);
+    // Pool을 만들어서 사용
+    JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     //sqlinjection
     String sql = "insert into member values(member_seq.nextval,?,?,?,?)";
-    PreparedStatement pstmt = jdbcConnect.conn.prepareStatement(sql);
+    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+
     pstmt.setString(1,userID);
     pstmt.setString(2,userPW);
     pstmt.setString(3,userName);
@@ -45,7 +48,7 @@
         ScriptWriter
             .alertAndBack(response,"회원가입이 되지 않았습니다. 잠시 후 다시 시도해 주세요.");
     }
-    jdbcConnect.close();
+    jdbcConnectionPool.close();
 %>
 <html>
 <head>

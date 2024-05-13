@@ -2,6 +2,7 @@
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="com.jjang051.jsp05.connect.JDBCConnectionPool" %>
 <%--
   Created by IntelliJ IDEA.
   User: JHTA
@@ -11,11 +12,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Class.forName("oracle.jdbc.OracleDriver");
+    /*Class.forName("oracle.jdbc.OracleDriver");
     Connection conn =
-            DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","jhta051","1234");
+            DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","jhta051","1234");*/
+    JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
+
     String sql = "select * from member order by no";
-    PreparedStatement pstmt = conn.prepareStatement(sql);
+    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
     ResultSet rs = pstmt.executeQuery(); // executeQuery의 리턴값은  resultSet
     /*if(rs.next()) {
         System.out.println(rs.getInt("no"));

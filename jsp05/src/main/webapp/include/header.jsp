@@ -1,5 +1,17 @@
+<%@ page import="com.jjang051.jsp05.utils.CookieManager" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="include/header.jsp" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSP - Hello World</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" >
+    <link href="css/sign-in.css" rel="stylesheet">
+    <script src="js/bootstrap.bundle.min.js" ></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+
+</head>
+<body>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div class="col-md-3 mb-2 mb-md-0">
@@ -22,4 +34,3 @@
         </div>
     </header>
 </div>
-<%@ include file="include/footer.jsp"  %>

@@ -4,7 +4,8 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="com.jjang051.jsp05.utils.CookieManager" %>
 <%@ page import="com.jjang051.jsp05.connect.JDBCConnect" %>
-<%@ page import="com.jjang051.jsp05.utils.ScriptWriter" %><%--
+<%@ page import="com.jjang051.jsp05.utils.ScriptWriter" %>
+<%@ page import="com.jjang051.jsp05.connect.JDBCConnectionPool" %><%--
   Created by IntelliJ IDEA.
   User: JHTA
   Date: 2024-05-10
@@ -18,9 +19,10 @@
     String userPW = request.getParameter("userPW");
     System.out.println(userID+"==="+userPW);
 
-    JDBCConnect jdbcConnect = new JDBCConnect();
+    //JDBCConnect jdbcConnect = new JDBCConnect();
+    JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql =  "delete from member where userId = ? and userPw = ?";
-    PreparedStatement pstmt = jdbcConnect.conn.prepareStatement(sql);
+    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
     pstmt.setString(1,userID);
     pstmt.setString(2,userPW);
 

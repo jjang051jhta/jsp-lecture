@@ -2,7 +2,8 @@
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="com.jjang051.jsp05.connect.JDBCConnect" %><%--
+<%@ page import="com.jjang051.jsp05.connect.JDBCConnect" %>
+<%@ page import="com.jjang051.jsp05.connect.JDBCConnectionPool" %><%--
   Created by IntelliJ IDEA.
   User: JHTA
   Date: 2024-05-10
@@ -13,9 +14,9 @@
 <%
     //db연결 조회해서 resultset에 값 담아서 아래쪽에 뿌리기...
     String userId = (String)session.getAttribute("userId");
-    JDBCConnect jdbcConnect = new JDBCConnect();
+    JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql =  "select * from member where userId = ?";
-    PreparedStatement pstmt = jdbcConnect.conn.prepareStatement(sql);
+    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
     pstmt.setString(1,userId);
     ResultSet rs = pstmt.executeQuery();
     String userName="";
