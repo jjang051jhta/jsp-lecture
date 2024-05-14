@@ -23,6 +23,7 @@ public class CookieManager {
                 Cookie cookie = cookies[i];
                 if (cookie.getName().equals(cookieName)) {
                     cookieValue = cookie.getValue();
+                    break;
                 }
             }
         }

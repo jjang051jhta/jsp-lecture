@@ -30,19 +30,19 @@
     <tbody>
         <tr>
             <th scope="row">no</th>
-            <td><%=no%></td>
+            <td><%=no%>></td>
         </tr>
         <tr>
             <th scope="row">id</th>
-            <td><%=userId%></td>
+            <td>${userId}</td>
         </tr>
         <tr>
             <th scope="row">name</th>
-            <td><%=userName%></td>
+            <td>${userName}</td>
         </tr>
         <tr>
             <th scope="row">birth</th>
-            <td><%=birth%></td>
+            <td><%=birth%>></td>
         </tr>
     </tbody>
 </table>

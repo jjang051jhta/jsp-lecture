@@ -15,7 +15,8 @@
         <h1 class="h3 mb-3 fw-normal">Please log in</h1>
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="userID">
+            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="userID"
+                   value="${cookie.loggedID.value}">
             <label for="floatingInput">User ID</label>
         </div>
         <div class="form-floating">
@@ -24,7 +25,7 @@
         </div>
 
         <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" name="saveID"
+            <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="saveID"
                    value="yes" <%=isChecked%>>
             <label class="form-check-label" for="flexCheckDefault">
                 Remember me
