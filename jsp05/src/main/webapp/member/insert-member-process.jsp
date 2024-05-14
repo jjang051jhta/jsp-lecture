@@ -30,15 +30,17 @@
     //JDBCConnect jdbcConnect = new JDBCConnect(application);
     // Pool을 만들어서 사용
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
-    //sqlinjection
+
+    PreparedStatement pstmt = jdbcConnectionPool.pstmt;
     String sql = "insert into member values(member_seq.nextval,?,?,?,?)";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
 
     pstmt.setString(1,userID);
     pstmt.setString(2,userPW);
     pstmt.setString(3,userName);
     pstmt.setString(4,birth);
     int result = pstmt.executeUpdate();
+    System.out.println("result==="+result);
     if(result > 0) {
         //out.println("<script>alert(\"회원가입 되었습니다.\");</script>");
         ScriptWriter

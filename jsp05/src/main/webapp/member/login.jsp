@@ -7,7 +7,7 @@
         isChecked="checked";
     }
 %>
-<%@ include file="include/header.jsp" %>
+<%@ include file="../include/header.jsp" %>
 <main class="form-signin w-100 m-auto">
     <form action="login-member-process.jsp" method="post">
         <%-- <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">--%>
@@ -32,4 +32,4 @@
         <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
     </form>
 </main>
-<%@ include file="include/footer.jsp"%>
+<%@ include file="../include/footer.jsp"%>

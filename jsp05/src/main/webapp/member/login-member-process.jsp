@@ -38,7 +38,7 @@
         }
         session.setAttribute("userId",userId);
         session.setAttribute("userName",userName);
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("../index/index.jsp");
 
     }
 
