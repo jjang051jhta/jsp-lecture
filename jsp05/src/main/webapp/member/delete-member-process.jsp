@@ -32,7 +32,7 @@
     if(result>0) {
         session.invalidate();
         CookieManager.deleteCookie(response,"loggedID");
-        ScriptWriter.alertAndNext(response,"회원탈퇴되었습니다.","index.jsp");
+        ScriptWriter.alertAndNext(response,"회원탈퇴되었습니다.","../index/index.jsp");
         //out.println("<script>alert("+result+");location.href=\"index.jsp\";</script>");
 
     }

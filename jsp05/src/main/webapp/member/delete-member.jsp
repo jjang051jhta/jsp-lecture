@@ -1,20 +1,13 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: JHTA
-  Date: 2024-05-10
-  Time: 오후 2:48
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-    <form action="delete-member-process.jsp" method="post">
-        <input type="password" name="userPW">
-        <input type="hidden" name="userID" value="<%=session.getAttribute("userId")%>">
-        <button>회원탈퇴</button>
-    </form>
-</body>
-</html>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ include file="../include/header.jsp" %>
+    <div class="container">
+        <form action="delete-member-process.jsp" method="post">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="password" name="userPW">
+            </div>
+            <input type="hidden" name="userID" value="<%=session.getAttribute("userId")%>">
+            <button class="btn btn-danger">회원탈퇴</button>
+        </form>
+    </div>
+<%@ include file="../include/footer.jsp" %>
