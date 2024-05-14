@@ -14,6 +14,7 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet" >
     <link href="../css/common.css" rel="stylesheet" >
     <link href="../css/sign-in.css" rel="stylesheet">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="../js/bootstrap.bundle.min.js" ></script>
     <script src="../js/jquery-3.7.1.min.js"></script>
 
