@@ -28,10 +28,10 @@
         </div>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="../index/index.jsp" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="../notice.jsp" class="nav-link px-2">Notice</a></li>
-            <li><a href="../board.jsp" class="nav-link px-2">Board</a></li>
-            <li><a href="../faq.jsp" class="nav-link px-2">FAQs</a></li>
-            <li><a href="../about.jsp" class="nav-link px-2">About</a></li>
+            <li><a href="notice.jsp" class="nav-link px-2">Notice</a></li>
+            <li><a href="board.jsp" class="nav-link px-2">Board</a></li>
+            <li><a href="faq.jsp" class="nav-link px-2">FAQs</a></li>
+            <li><a href="about.jsp" class="nav-link px-2">About</a></li>
         </ul>
         <% if(loggedID==null) { %>
             <div class="col-md-3 text-end">
@@ -47,8 +47,5 @@
                 <%--<a href="../member/insert-member.jsp" class="btn btn-primary">Sign-up</a>--%>
             </div>
         <%}%>
-
-
-
     </header>
 </div>
