@@ -9,32 +9,102 @@
     PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
     ResultSet rs = pstmt.executeQuery();
 %>
+
+<script>
+    //history.back() reload 이슈 해결
+    if (document.addEventListener) {
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted || window.performance && window.performance.navigation.type == 2) {
+                location.reload();
+            }
+        }, false);
+    }
+</script>
 <div class="container">
     <h2 class="mt-5 mb-5">MEMBER LIST</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>no</th>
-            <th>id</th>
-            <th>name</th>
-            <th>email</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
+    <form action="delete-member-process-all.jsp" method="get">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>no</th>
+                <th>id</th>
+                <th>name</th>
+                <th>email</th>
+                <th>delete</th>
+                <th><input type="checkbox" id="check-all"></th>
 
-            <%
-                while(rs.next()) {
-                    out.println("<tr>");
-                    out.println("<td>"+rs.getInt("no")+"</td>");
-                    out.println("<td>"+rs.getString("userid")+"</td>");
-                    out.println("<td>"+rs.getString("username")+"</td>");
-                    out.println("<td>"+rs.getString("email")+"</td>");
-                    out.println("<td><a href=\"../member/admin-delete-member-process.jsp?userID="+rs.getString("userid")+"\" class=\"btn btn-danger\">DEL</a></td>");
-                    out.println("</tr>");
-                }
-            %>
-        </tbody>
-    </table>
+            </tr>
+            </thead>
+            <tbody>
+            <% while (rs.next()) { %>
+            <tr>
+                <td><%=rs.getInt("no")%>
+                </td>
+                <td><%=rs.getString("userid")%>
+                </td>
+                <td><%=rs.getString("username")%>
+                </td>
+                <td><%=rs.getString("email")%>
+                </td>
+                <td>
+                    <a href="../member/admin-delete-member-process.jsp?userID=<%=rs.getString("userid")%>"
+                       class="btn btn-danger">DEL</a>
+                    <button class="btn btn-danger btn-delete mx-1" type="button"
+                            data-userid="<%=rs.getString("userid") %>">AJAX-DEL
+                    </button>
+                </td>
+                <td><input type="checkbox" id="" name="check" value="<%= rs.getInt("no") %>" class="check"></td>
+            </tr>
+            <%}%>
+            </tbody>
+        </table>
+        <div class="mt-2">
+            <button class="btn btn-danger">DEL</button>
+        </div>
+    </form>
 </div>
+<script>
+    // a href="데이터 처리할 서버 페이지?변수 = 값&변수 = 값"
+    // form action="데이터 처리할 서버 페이지" name="변수" value="값" method="post/get"
+    // ajax ( jquery ajax(), vanilla script fetch(), axios 라이브러리 유명함...)
+    $(".btn-delete").on("click", function () {
+        const parent = $(this).parent().parent();
+        //alert("경고");
+        const sendUserID = $(this).data("userid");
+        //alert(sendUserID);
+        $.ajax({
+            url: "../member/admin-delete-member-ajax-process.jsp",
+            data: {
+                userID: sendUserID
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.isDelete === "yes") {
+                    //alert(sendUserID+"님을 탈퇴시겼습니다.");
+                    //location.reload();
+                    //parent.remove();
+                    parent.fadeOut();
+                }
+            }
+        });
+
+    });
+
+    $("#check-all").on("change", function () {
+        //  속성의 값을 체크할때
+        console.log($(this).prop("checked"));
+        if ($(this).prop("checked")) {
+            $(".check").prop("checked", true);
+        } else {
+            $(".check").prop("checked", false);
+        }
+        /*
+        if($(this).is(":checked")) {
+            $(".check").prop("checked",true);
+        } else {
+            $(".check").prop("checked",false);
+        }
+       */
+    })
+</script>
 <%@ include file="../include/footer.jsp" %>

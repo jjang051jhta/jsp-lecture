@@ -1,6 +1,9 @@
 <%@ page import="com.jjang051.jsp05.connect.JDBCConnectionPool" %>
 <%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="com.jjang051.jsp05.utils.ScriptWriter" %><%--
+<%@ page import="com.jjang051.jsp05.utils.ScriptWriter" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="com.google.gson.Gson" %><%--
   Created by IntelliJ IDEA.
   User: JHTA
   Date: 2024-05-16
@@ -16,10 +19,16 @@
     PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
     pstmt.setString(1,userID);
     int result = pstmt.executeUpdate();
+    response.setContentType("application/json; charset=utf-8");
+    Map <String,String> resultMap = new HashMap<>();
     if(result>0) {
-        //ScriptWriter.alertAndNext(response,userID+"님 삭제되었습니다.","../member/list-member.jsp");
-        ScriptWriter.alertAndBack(response,userID+"님 삭제되었습니다.");
+        resultMap.put("isDelete","yes");
+    } else {
+        resultMap.put("isDelete","no");
     }
+    Gson gson = new Gson();
+    String returnJson = gson.toJson(resultMap); //json으로 변환해줌...
+    out.println(returnJson);
 %>
 
 
