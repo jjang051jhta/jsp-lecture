@@ -10,20 +10,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
-  String sql =  "delete from member where no = ?";
-  PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-  jdbcConnectionPool.conn.setAutoCommit(false); // 오토커밋 끄기...
-  String noList[] = request.getParameterValues("check");
-  //한꺼번에 삭제할때는
-  for(int i=0;i<noList.length;i++){
-    //System.out.println(noList[i]);
-    pstmt.setInt(1,Integer.parseInt(noList[i]));
-    pstmt.addBatch(); //한번에 처리하기 위한 함수
+  try {
+    String sql = "delete from member where no = ?";
+    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.conn.setAutoCommit(false); // 오토커밋 끄기...
+    String noList[] = request.getParameterValues("check");
+    //한꺼번에 삭제할때는
+    for (int i = 0; i < noList.length; i++) {
+      //System.out.println(noList[i]);
+      pstmt.setInt(1, Integer.parseInt(noList[i]));
+      pstmt.addBatch(); //한번에 처리하기 위한 함수
+    }
+    int result[] = pstmt.executeBatch();
+    System.out.println(Arrays.toString(result));
+    jdbcConnectionPool.conn.commit();
+  } catch (Exception e) {
+    jdbcConnectionPool.conn.rollback();
+    e.printStackTrace();
+  } finally {
+    // 무조건 실행하는 곳  autoCommit(false)
+    jdbcConnectionPool.conn.setAutoCommit(true); // 다음번 들어오는건 autoCommit이 된다.
   }
-  int result[] = pstmt.executeBatch();
-  System.out.println(Arrays.toString(result));
-  jdbcConnectionPool.conn.setAutoCommit(true); // 오토커밋 끄기...
-  /*for(int i=0;i<result.length;i++){
-    System.out.println(result[i]);
-  }*/
 %>
