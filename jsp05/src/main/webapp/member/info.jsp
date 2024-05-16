@@ -16,12 +16,19 @@
     pstmt.setString(1,userId);
     ResultSet rs = pstmt.executeQuery();
     String userName="";
+    String userEmail = "";
     String birth = "";
+    String address = "";
+    int postCode=0;
     int no = 0;
     if(rs.next()) {
         no =  rs.getInt("no");
         userName =  rs.getString("userName");
+        userEmail =  rs.getString("email");
         birth =  rs.getString("birth");
+        postCode = rs.getInt("postcode");
+        address = rs.getString("address")+" "+rs.getString("address_detail");
+
     }
 
 %>
@@ -30,7 +37,7 @@
     <tbody>
         <tr>
             <th scope="row">no</th>
-            <td><%=no%>></td>
+            <td><%=no%></td>
         </tr>
         <tr>
             <th scope="row">id</th>
@@ -41,8 +48,20 @@
             <td>${userName}</td>
         </tr>
         <tr>
+            <th scope="row">email</th>
+            <td><%=userEmail%></td>
+        </tr>
+        <tr>
+            <th scope="row">postcode</th>
+            <td><%=postCode%></td>
+        </tr>
+        <tr>
+            <th scope="row">address</th>
+            <td><%=address%></td>
+        </tr>
+        <tr>
             <th scope="row">birth</th>
-            <td><%=birth%>></td>
+            <td><%=birth%></td>
         </tr>
     </tbody>
 </table>

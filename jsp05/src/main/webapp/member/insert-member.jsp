@@ -55,6 +55,7 @@
                 <button class="btn btn-outline-primary" type="reset">RESET</button>
             </div>
         </form>
+
     </div>
 <script>
     let isIdChecked=false;

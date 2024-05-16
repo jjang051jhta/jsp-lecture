@@ -26,9 +26,9 @@ public class ScriptWriter {
     }
     public static void alertAndBack(HttpServletResponse response, String msg) {
         try {
-            response.setContentType("text/html;charset=utf-8");
+            response.setContentType("text/html; charset=utf-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert(\""+msg+"\"s); history.back();</script>");
+            out.println("<script>alert(\""+msg+"\"); history.back();</script>");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

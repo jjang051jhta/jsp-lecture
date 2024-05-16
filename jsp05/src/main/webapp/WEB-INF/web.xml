@@ -23,6 +23,18 @@
         <param-name>OraclePassword</param-name>
         <param-value>1234</param-value>
     </context-param>
+
+    <context-param>
+        <param-name>NaverMailID</param-name>
+        <param-value>jjang051hta</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>NaverMailPass</param-name>
+        <param-value>QWERASDFzxcv2242</param-value>
+    </context-param>
+
+
     <error-page>
         <error-code>404</error-code>
         <location>/error/error404.jsp</location>
