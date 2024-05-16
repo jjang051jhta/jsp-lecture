@@ -20,15 +20,22 @@
       //System.out.println(noList[i]);
       pstmt.setInt(1, Integer.parseInt(noList[i]));
       pstmt.addBatch(); //한번에 처리하기 위한 함수
+      if(i==1) {
+        //throw new Exception("알 수 없는 서버 오류");
+      }
     }
     int result[] = pstmt.executeBatch();
     System.out.println(Arrays.toString(result));
     jdbcConnectionPool.conn.commit();
+
   } catch (Exception e) {
     jdbcConnectionPool.conn.rollback();
     e.printStackTrace();
+
   } finally {
     // 무조건 실행하는 곳  autoCommit(false)
     jdbcConnectionPool.conn.setAutoCommit(true); // 다음번 들어오는건 autoCommit이 된다.
+    jdbcConnectionPool.conn.close();
   }
+
 %>

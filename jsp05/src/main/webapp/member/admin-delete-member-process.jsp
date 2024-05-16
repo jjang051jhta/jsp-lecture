@@ -9,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    //DAO(Database Access Object)  / DTO (Databse Transfer Object)
     // history.back()을 하면 refresh가 같이 발생을 함,,,, 크롬도 막힌거 같음...
     String userID = request.getParameter("userID");
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();

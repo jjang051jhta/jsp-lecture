@@ -22,7 +22,7 @@
 </script>
 <div class="container">
     <h2 class="mt-5 mb-5">MEMBER LIST</h2>
-    <form action="delete-member-process-all.jsp" method="get">
+    <form action="delete-member-process-all.jsp" method="get" id="member-list-form">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -59,14 +59,30 @@
             </tbody>
         </table>
         <div class="mt-2">
-            <button class="btn btn-danger">DEL</button>
+            <button class="btn btn-danger btn-delete-all">DEL</button>
         </div>
     </form>
+    <button class="btn btn-danger btn-delete-all02">삭제</button>
 </div>
 <script>
     // a href="데이터 처리할 서버 페이지?변수 = 값&변수 = 값"
     // form action="데이터 처리할 서버 페이지" name="변수" value="값" method="post/get"
     // ajax ( jquery ajax(), vanilla script fetch(), axios 라이브러리 유명함...)
+    // 
+    $(".btn-delete-all02").on("click",function() {
+        $("#member-list-form").submit();
+    });
+    $(".btn-delete-all").on("click",function(e) {
+        //e.preventDefault();
+        const isAllDelete = confirm("삭제하시겠습니까?");
+        if(isAllDelete) {
+            $("#member-list-form").submit();
+        }
+        return false;
+        //console.log(isAllDelete);
+    })
+
+
     $(".btn-delete").on("click", function () {
         const parent = $(this).parent().parent();
         //alert("경고");
