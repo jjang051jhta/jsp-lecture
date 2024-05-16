@@ -3,7 +3,8 @@
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="com.jjang051.jsp05.utils.CookieManager" %>
-<%@ page import="com.jjang051.jsp05.connect.JDBCConnectionPool" %><%--
+<%@ page import="com.jjang051.jsp05.connect.JDBCConnectionPool" %>
+<%@ page import="com.jjang051.jsp05.utils.ScriptWriter" %><%--
   Created by IntelliJ IDEA.
   User: JHTA
   Date: 2024-05-10
@@ -40,16 +41,8 @@
         session.setAttribute("userName",userName);
         response.sendRedirect("../index/index.jsp");
 
+    } else {
+        ScriptWriter.alertAndBack(response,"아이디 패스워드 확인해 주세요.");
     }
 
 %>
-
-
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>

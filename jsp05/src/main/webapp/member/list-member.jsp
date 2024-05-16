@@ -68,7 +68,7 @@
     // a href="데이터 처리할 서버 페이지?변수 = 값&변수 = 값"
     // form action="데이터 처리할 서버 페이지" name="변수" value="값" method="post/get"
     // ajax ( jquery ajax(), vanilla script fetch(), axios 라이브러리 유명함...)
-    // 
+    //
     $(".btn-delete-all02").on("click",function() {
         $("#member-list-form").submit();
     });
