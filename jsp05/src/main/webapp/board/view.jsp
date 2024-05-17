@@ -149,8 +149,16 @@
     </div>
 </div>
 <script>
+    const passwordModal = new bootstrap.Modal("#password-modal");
+    const passwordModalEl01 =  $("#password-modal");
+    const passwordModalEl02 =  document.querySelector("#password-modal");
+    console.log(passwordModalEl01);
+    console.log(passwordModalEl02);
+    //jQuery이벤트는 on으로 처리한다.
+    passwordModalEl01.on("hidden.bs.modal", function(e) {
+        console.log("닫히는 이벤트");
+    });
     $("#btn-password-popup").on("click",function(){
-        const passwordModal = new bootstrap.Modal("#password-modal");
         passwordModal.show();
     });
     $("#btn-delete").on("click",function(){
@@ -168,9 +176,18 @@
                 console.log(data);
                 if(data.isDelete==="yes") {
                     //alert(sendNo+"글이 삭제되었습니다.");
-                    location.href="../board/list.jsp";
+                    //location.href="../board/list.jsp";
+                    passwordModal.hide();
+                    passwordModalEl02.addEventListener("hidden.bs.modal", function(e) {
+                        console.log("닫히는 이벤트");
+                        location.href="../board/list.jsp"
+                    });
                 } else {
                     //alert("알 수 없는 에러가 발생되었습니다. 다시 시도해 주세요.");
+                    passwordModal.hide();
+                    passwordModalEl02.addEventListener("hidden.bs.modal", function() {
+                        alert("알 수 없는 에러가 발생되었습니다. 다시 시도해 주세요.");
+                    })
                 }
             },
             error:function(err) {
