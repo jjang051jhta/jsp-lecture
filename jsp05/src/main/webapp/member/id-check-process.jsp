@@ -11,12 +11,12 @@
     System.out.println(userID);
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql = "select count(*) as count from member where userID = ?";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-    pstmt.setString(1,userID);
-    ResultSet rs = pstmt.executeQuery();
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.pstmt.setString(1,userID);
+    jdbcConnectionPool.rs = jdbcConnectionPool.pstmt.executeQuery();
     int result = 0; // 중복이 아니면 0, 중복이면 1
-    if(rs.next()) {
-        result = rs.getInt("count");
+    if(jdbcConnectionPool.rs.next()) {
+        result = jdbcConnectionPool.rs.getInt("count");
     }
     response.setContentType("application/json; charset=utf-8");
     Map<String , Integer> countMap = new HashMap<>();
@@ -24,6 +24,7 @@
     Gson gson = new Gson();
     String returnJson = gson.toJson(countMap);
     out.println(returnJson);
+    jdbcConnectionPool.close();
     //response.setContentType("application/json; charset=utf-8");
     //out.println("{\"count\":\""+result+"\"}");
     //만약 userID 가 db에 있으면 알려주면 된다.

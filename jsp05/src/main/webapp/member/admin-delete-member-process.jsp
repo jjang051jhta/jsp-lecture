@@ -14,13 +14,14 @@
     String userID = request.getParameter("userID");
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql =  "delete from member where userId = ?";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-    pstmt.setString(1,userID);
-    int result = pstmt.executeUpdate();
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.pstmt.setString(1,userID);
+    int result = jdbcConnectionPool.pstmt.executeUpdate();
     if(result>0) {
         //ScriptWriter.alertAndNext(response,userID+"님 삭제되었습니다.","../member/list-member.jsp");
         ScriptWriter.alertAndBack(response,userID+"님 삭제되었습니다.");
     }
+    jdbcConnectionPool.close();
 %>
 
 

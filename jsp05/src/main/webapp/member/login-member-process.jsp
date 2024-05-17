@@ -21,15 +21,15 @@
     DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","jhta051","1234");*/
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql = "select * from member where userId = ? and userPw = ?";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-    pstmt.setString(1,userID);
-    pstmt.setString(2,userPW);
-    ResultSet rs = pstmt.executeQuery();
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.pstmt.setString(1,userID);
+    jdbcConnectionPool.pstmt.setString(2,userPW);
+    jdbcConnectionPool.rs = jdbcConnectionPool.pstmt.executeQuery();
     //결과 돌려주기
-    if(rs.next()) {
+    if(jdbcConnectionPool.rs.next()) {
         //로그인 됐음
-        String userId = rs.getString("userid");
-        String userName = rs.getString("username");
+        String userId = jdbcConnectionPool.rs.getString("userid");
+        String userName = jdbcConnectionPool.rs.getString("username");
         //System.out.println(userId+"=="+userName);
         if(saveID!=null && saveID.equals("yes")) {
             //쿠키설정
@@ -44,5 +44,6 @@
     } else {
         ScriptWriter.alertAndBack(response,"아이디 패스워드 확인해 주세요.");
     }
+    jdbcConnectionPool.close();
 
 %>

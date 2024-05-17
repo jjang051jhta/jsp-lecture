@@ -19,16 +19,16 @@
 
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql = "INSERT INTO board values(board_seq.nextval,?,?,?,?,?,1,sysdate)";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
 
-    pstmt.setString(1,subject);
-    pstmt.setString(2,content);
-    pstmt.setString(3,userID);
-    pstmt.setString(4,userName);
-    pstmt.setString(5,password);
+    jdbcConnectionPool.pstmt.setString(1,subject);
+    jdbcConnectionPool.pstmt.setString(2,content);
+    jdbcConnectionPool.pstmt.setString(3,userID);
+    jdbcConnectionPool.pstmt.setString(4,userName);
+    jdbcConnectionPool.pstmt.setString(5,password);
 
 
-    int result = pstmt.executeUpdate();
+    int result = jdbcConnectionPool.pstmt.executeUpdate();
     if(result>0) {
         ScriptWriter.alertAndNext(response,"글이 입력되었습니다.","../board/list.jsp");
     } else {

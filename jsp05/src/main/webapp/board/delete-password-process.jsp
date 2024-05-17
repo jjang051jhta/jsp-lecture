@@ -17,10 +17,12 @@
     jdbcConnectionPool.pstmt.setInt(1, no);
     jdbcConnectionPool.pstmt.setString(2, userPW);
     int result = jdbcConnectionPool.pstmt.executeUpdate();
+
     if(result > 0) {
         ScriptWriter.alertAndNext
                 (response,no+"번째 글이 삭제되었습니다.","../board/list.jsp");
     } else {
         ScriptWriter.alertAndBack(response,"비밀번호 입력이 잘못되었습니다.");
     }
+    jdbcConnectionPool.close();
 %>

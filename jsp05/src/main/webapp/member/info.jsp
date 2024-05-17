@@ -12,24 +12,25 @@
     String userId = (String)session.getAttribute("userId");
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql =  "select * from member where userId = ?";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-    pstmt.setString(1,userId);
-    ResultSet rs = pstmt.executeQuery();
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.pstmt.setString(1,userId);
+    jdbcConnectionPool.rs = jdbcConnectionPool.pstmt.executeQuery();
     String userName="";
     String userEmail = "";
     String birth = "";
     String address = "";
     int postCode=0;
     int no = 0;
-    if(rs.next()) {
-        no =  rs.getInt("no");
-        userName =  rs.getString("userName");
-        userEmail =  rs.getString("email");
-        birth =  rs.getString("birth");
-        postCode = rs.getInt("postcode");
-        address = rs.getString("address")+" "+rs.getString("address_detail");
-
+    if(jdbcConnectionPool.rs.next()) {
+        no =  jdbcConnectionPool.rs.getInt("no");
+        userName =  jdbcConnectionPool.rs.getString("userName");
+        userEmail =  jdbcConnectionPool.rs.getString("email");
+        birth =  jdbcConnectionPool.rs.getString("birth");
+        postCode = jdbcConnectionPool.rs.getInt("postcode");
+        address = jdbcConnectionPool.rs.getString("address")+" "+jdbcConnectionPool.rs.getString("address_detail");
     }
+    jdbcConnectionPool.close();
+
 
 %>
 <div class="container">

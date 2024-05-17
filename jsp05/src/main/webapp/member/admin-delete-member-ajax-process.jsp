@@ -16,9 +16,9 @@
     String userID = request.getParameter("userID");
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql =  "delete from member where userId = ?";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-    pstmt.setString(1,userID);
-    int result = pstmt.executeUpdate();
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.pstmt.setString(1,userID);
+    int result = jdbcConnectionPool.pstmt.executeUpdate();
     response.setContentType("application/json; charset=utf-8");
     Map <String,String> resultMap = new HashMap<>();
     if(result>0) {
@@ -29,6 +29,7 @@
     Gson gson = new Gson();
     String returnJson = gson.toJson(resultMap); //json으로 변환해줌...
     out.println(returnJson);
+    jdbcConnectionPool.close();
 %>
 
 

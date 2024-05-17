@@ -12,8 +12,8 @@
 <%
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql = "select * from board  order by regdate desc";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-    ResultSet rs = pstmt.executeQuery();
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.rs = jdbcConnectionPool.pstmt.executeQuery();
 %>
 
 
@@ -30,16 +30,19 @@
         </tr>
         </thead>
         <tbody>
-        <% while (rs.next()) { %>
+        <% while (jdbcConnectionPool.rs.next()) { %>
         <tr>
             <%--form a ajax--%>
-            <td><%=rs.getInt("no")%></td>
-            <td><a href="../board/view.jsp?no=<%=rs.getInt("no")%>"><%=rs.getString("subject")%></a></td>
-            <td><%=rs.getString("username")%></td>
-            <td><%=rs.getInt("hit")%></td>
-            <td><%=rs.getString("regdate")%></td>
+            <td><%=jdbcConnectionPool.rs.getInt("no")%></td>
+            <td><a href="../board/view.jsp?no=<%=jdbcConnectionPool.rs.getInt("no")%>"><%=jdbcConnectionPool.rs.getString("subject")%></a></td>
+            <td><%=jdbcConnectionPool.rs.getString("username")%></td>
+            <td><%=jdbcConnectionPool.rs.getInt("hit")%></td>
+            <td><%=jdbcConnectionPool.rs.getString("regdate")%></td>
         </tr>
-        <%}%>
+        <%
+            }
+            jdbcConnectionPool.close();
+        %>
         </tbody>
     </table>
     <div class="mt-5 mb-5"><a href="../board/write.jsp" class="btn btn-primary">WRITE</a></div>

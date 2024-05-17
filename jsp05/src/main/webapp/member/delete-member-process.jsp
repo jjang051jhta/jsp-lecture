@@ -22,11 +22,11 @@
     //JDBCConnect jdbcConnect = new JDBCConnect();
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql =  "delete from member where userId = ? and userPw = ?";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-    pstmt.setString(1,userID);
-    pstmt.setString(2,userPW);
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.pstmt.setString(1,userID);
+    jdbcConnectionPool.pstmt.setString(2,userPW);
 
-    int result = pstmt.executeUpdate();
+    int result = jdbcConnectionPool.pstmt.executeUpdate();
     // 행에 영향을 미친 갯수 0이면 하나도 실행이 안돼다.
     // 0보다 크면 쿼리가 실행이 되어서 table에 영향을 미쳤다.
     if(result>0) {
@@ -36,13 +36,6 @@
         //out.println("<script>alert("+result+");location.href=\"index.jsp\";</script>");
 
     }
+    jdbcConnectionPool.close();
 
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>

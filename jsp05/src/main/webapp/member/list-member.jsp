@@ -6,8 +6,8 @@
 <%
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     String sql = "select * from member";
-    PreparedStatement pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
-    ResultSet rs = pstmt.executeQuery();
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+    jdbcConnectionPool.rs = jdbcConnectionPool.pstmt.executeQuery();
 %>
 
 <script>
@@ -36,24 +36,24 @@
             </tr>
             </thead>
             <tbody>
-            <% while (rs.next()) { %>
+            <% while (jdbcConnectionPool.rs.next()) { %>
             <tr>
-                <td><%=rs.getInt("no")%>
+                <td><%=jdbcConnectionPool.rs.getInt("no")%>
                 </td>
-                <td><%=rs.getString("userid")%>
+                <td><%=jdbcConnectionPool.rs.getString("userid")%>
                 </td>
-                <td><%=rs.getString("username")%>
+                <td><%=jdbcConnectionPool.rs.getString("username")%>
                 </td>
-                <td><%=rs.getString("email")%>
+                <td><%=jdbcConnectionPool.rs.getString("email")%>
                 </td>
                 <td>
-                    <a href="../member/admin-delete-member-process.jsp?userID=<%=rs.getString("userid")%>"
+                    <a href="../member/admin-delete-member-process.jsp?userID=<%=jdbcConnectionPool.rs.getString("userid")%>"
                        class="btn btn-danger">DEL</a>
                     <button class="btn btn-danger btn-delete mx-1" type="button"
-                            data-userid="<%=rs.getString("userid") %>">AJAX-DEL
+                            data-userid="<%=jdbcConnectionPool.rs.getString("userid") %>">AJAX-DEL
                     </button>
                 </td>
-                <td><input type="checkbox" id="" name="check" value="<%= rs.getInt("no") %>" class="check"></td>
+                <td><input type="checkbox" id="" name="check" value="<%= jdbcConnectionPool.rs.getInt("no") %>" class="check"></td>
             </tr>
             <%}%>
             </tbody>
@@ -64,6 +64,7 @@
     </form>
     <button class="btn btn-danger btn-delete-all02">삭제</button>
 </div>
+<% jdbcConnectionPool.close(); %>
 <script>
     // a href="데이터 처리할 서버 페이지?변수 = 값&변수 = 값"
     // form action="데이터 처리할 서버 페이지" name="변수" value="값" method="post/get"

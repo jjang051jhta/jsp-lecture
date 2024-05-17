@@ -77,7 +77,9 @@
                 <%=jdbcConnectionPool.rs.getString("content")%>
             </td>
         </tr>
-        <% } %>
+        <%
+            }
+        %>
         </tbody>
     </table>
     <div class="mt-5 mb-5">
@@ -95,11 +97,17 @@
             <button class="btn btn-danger" id="btn-password-popup">PASSWORD-POPUP</button>
 
         <a href="../board/list.jsp" class="btn btn-danger">MODIFY</a>
-        <% } %>
+        <%
+            }
+
+        %>
     </div>
     <form action="../board/delete.jsp" method="post" id="del-form">
         <input type="hidden" name="no" value="<%=jdbcConnectionPool.rs.getInt("no")%>">
     </form>
+    <%
+        jdbcConnectionPool.close();
+    %>
     <script>
         //form바깥에 있는 버튼에서 form submit()을 할 수 있다.
         $("#btn-form-del").on("click",function(){
@@ -150,8 +158,8 @@
 </div>
 <script>
     const passwordModal = new bootstrap.Modal("#password-modal");
-    const passwordModalEl01 =  $("#password-modal");
-    const passwordModalEl02 =  document.querySelector("#password-modal");
+    const passwordModalEl01 =  $("#password-modal");  //jQuery
+    const passwordModalEl02 =  document.querySelector("#password-modal"); // js(vanilla)
     console.log(passwordModalEl01);
     console.log(passwordModalEl02);
     //jQuery이벤트는 on으로 처리한다.

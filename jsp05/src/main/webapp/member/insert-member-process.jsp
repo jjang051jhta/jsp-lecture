@@ -38,19 +38,19 @@
     // Pool을 만들어서 사용
     JDBCConnectionPool jdbcConnectionPool = new JDBCConnectionPool();
     //회원가입 되는지 확인...
-    PreparedStatement pstmt = jdbcConnectionPool.pstmt;
-    String sql = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,?)";
-    pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
 
-    pstmt.setString(1,userID);
-    pstmt.setString(2,userPW);
-    pstmt.setString(3,userName);
-    pstmt.setString(4,userEmail);
-    pstmt.setInt(5,postCode);
-    pstmt.setString(6,address);
-    pstmt.setString(7,detailAddress);
-    pstmt.setString(8,birth);
-    int result = pstmt.executeUpdate();
+    String sql = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,?)";
+    jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
+
+    jdbcConnectionPool.pstmt.setString(1,userID);
+    jdbcConnectionPool.pstmt.setString(2,userPW);
+    jdbcConnectionPool.pstmt.setString(3,userName);
+    jdbcConnectionPool.pstmt.setString(4,userEmail);
+    jdbcConnectionPool.pstmt.setInt(5,postCode);
+    jdbcConnectionPool.pstmt.setString(6,address);
+    jdbcConnectionPool.pstmt.setString(7,detailAddress);
+    jdbcConnectionPool.pstmt.setString(8,birth);
+    int result = jdbcConnectionPool.pstmt.executeUpdate();
     System.out.println("result==="+result);
     if(result > 0) {
         //out.println("<script>alert(\"회원가입 되었습니다.\");</script>");

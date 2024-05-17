@@ -8,13 +8,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     session.invalidate();
-out.println("<script>alert(\"로그아웃되었습니다.\");location.href=\"login.jsp\";</script>");
+    out.println("<script>alert(\"로그아웃되었습니다.\");location.href=\"login.jsp\";</script>");
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
