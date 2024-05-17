@@ -92,6 +92,8 @@
                     data-no="<%=jdbcConnectionPool.rs.getInt("no")%>">DEL-AJAX</button>
             <a href="../board/delete-form.jsp?no=<%=jdbcConnectionPool.rs.getInt("no")%>"
                class="btn btn-danger" id="">PASSWORD-SEND</a>
+            <button class="btn btn-danger" id="btn-password-popup">PASSWORD-POPUP</button>
+
         <a href="../board/list.jsp" class="btn btn-danger">MODIFY</a>
         <% } %>
     </div>
@@ -127,7 +129,7 @@
     </script>
     <% jdbcConnectionPool.close(); %>
 </div>
-<div class="modal" tabindex="-1">
+<div class="modal fade" id="password-modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -135,17 +137,48 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="../board/delete-password-process.jsp" method="post">
-                    <label for="userPW">PASSWORD</label>
-                    <input type="password" id="userPW" class="form-control mt-2" name="userPW">
-                    <input type="hidden" name="no" value="${param.no}">
-                </form>
+                <label for="userPW">PASSWORD</label>
+                <input type="password" id="userPW" class="form-control mt-2" name="userPW">
+                <input type="hidden" id="board-no" name="no" value="${param.no}">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">DELETE</button>
+                <button type="button" class="btn btn-primary" id="btn-delete">DELETE</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $("#btn-password-popup").on("click",function(){
+        const passwordModal = new bootstrap.Modal("#password-modal");
+        passwordModal.show();
+    });
+    $("#btn-delete").on("click",function(){
+        const sendPw = $("#userPW").val();
+        const sendNo = $("#board-no").val();
+        console.log(sendNo,"===",sendPw);
+        $.ajax({
+            url:"../board/delete-ajax-popup.jsp",
+            method:"post",
+            data: {
+                no:sendNo,
+                userPW:sendPw
+            },
+            success:function(data) {
+                console.log(data);
+                if(data.isDelete==="yes") {
+                    //alert(sendNo+"글이 삭제되었습니다.");
+                    location.href="../board/list.jsp";
+                } else {
+                    //alert("알 수 없는 에러가 발생되었습니다. 다시 시도해 주세요.");
+                }
+            },
+            error:function(err) {
+                console.log(err);
+            }
+        });
+    })
+
+
+</script>
 <%@ include file="../include/footer.jsp" %>
