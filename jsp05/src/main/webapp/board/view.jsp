@@ -82,8 +82,46 @@
     </table>
     <div class="mt-5 mb-5">
         <a href="../board/write.jsp" class="btn btn-primary">WRITE</a>
-        <a href="../board/list.jsp" class="btn btn-primary mx-2">LIST</a>
+        <a href="../board/list.jsp" class="btn btn-primary">LIST</a>
+        <%--글쓴인만 두가지 메뉴가 보이게 처리...  jjang051 == rs.--%>
+        <% if(loggedID!=null &&
+                loggedID.equals(jdbcConnectionPool.rs.getString("userid"))) { %>
+            <a href="../board/delete.jsp?no=<%=jdbcConnectionPool.rs.getInt("no")%>" class="btn btn-danger">DEL</a>
+            <button class="btn btn-danger" id="btn-form-del">DEL-FORM</button>
+            <button class="btn btn-danger" id="btn-form-del-ajax"
+                    data-no="<%=jdbcConnectionPool.rs.getInt("no")%>">DEL-AJAX</button>
+        <a href="../board/list.jsp" class="btn btn-danger">MODIFY</a>
+        <% } %>
     </div>
+    <form action="../board/delete.jsp" method="post" id="del-form">
+        <input type="hidden" name="no" value="<%=jdbcConnectionPool.rs.getInt("no")%>">
+    </form>
+    <script>
+        //form바깥에 있는 버튼에서 form submit()을 할 수 있다.
+        $("#btn-form-del").on("click",function(){
+            $("#del-form").submit();
+        })
+        $("#btn-form-del-ajax").on("click",function(){
+            const sendNo = $(this).data("no");
+            $.ajax({
+                url:"../board/delete-ajax.jsp",
+                data: {
+                    no:sendNo,
+                },
+                success:function(data) {
+                    if(data.isDelete==="yes") {
+                        alert(sendNo+"글이 삭제되었습니다.");
+                        location.href="../board/list.jsp";
+                    } else {
+                        alert("알 수 없는 에러가 발생되었습니다. 다시 시도해 주세요.");
+                    }
+                },
+                error:function(err) {
+                    console.log(err);
+                }
+            });
+        })
+    </script>
     <% jdbcConnectionPool.close(); %>
 </div>
 <%@ include file="../include/footer.jsp" %>
