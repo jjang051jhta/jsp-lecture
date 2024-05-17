@@ -90,6 +90,8 @@
             <button class="btn btn-danger" id="btn-form-del">DEL-FORM</button>
             <button class="btn btn-danger" id="btn-form-del-ajax"
                     data-no="<%=jdbcConnectionPool.rs.getInt("no")%>">DEL-AJAX</button>
+            <a href="../board/delete-form.jsp?no=<%=jdbcConnectionPool.rs.getInt("no")%>"
+               class="btn btn-danger" id="">PASSWORD-SEND</a>
         <a href="../board/list.jsp" class="btn btn-danger">MODIFY</a>
         <% } %>
     </div>
@@ -109,6 +111,7 @@
                     no:sendNo,
                 },
                 success:function(data) {
+                    console.log(data);
                     if(data.isDelete==="yes") {
                         alert(sendNo+"글이 삭제되었습니다.");
                         location.href="../board/list.jsp";
@@ -123,5 +126,26 @@
         })
     </script>
     <% jdbcConnectionPool.close(); %>
+</div>
+<div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">PASSWORD</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="../board/delete-password-process.jsp" method="post">
+                    <label for="userPW">PASSWORD</label>
+                    <input type="password" id="userPW" class="form-control mt-2" name="userPW">
+                    <input type="hidden" name="no" value="${param.no}">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">DELETE</button>
+            </div>
+        </div>
+    </div>
 </div>
 <%@ include file="../include/footer.jsp" %>
