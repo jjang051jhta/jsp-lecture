@@ -32,8 +32,9 @@
         <tbody>
         <% while (rs.next()) { %>
         <tr>
+            <%--form a ajax--%>
             <td><%=rs.getInt("no")%></td>
-            <td><a href="../board/view.jsp"><%=rs.getString("subject")%></a></td>
+            <td><a href="../board/view.jsp?no=<%=rs.getInt("no")%>"><%=rs.getString("subject")%></a></td>
             <td><%=rs.getString("username")%></td>
             <td><%=rs.getInt("hit")%></td>
             <td><%=rs.getString("regdate")%></td>

@@ -22,3 +22,6 @@
     left: 50%;
     transform: translateX(-50%);
 }
+.content {
+    white-space: pre-line;
+}
