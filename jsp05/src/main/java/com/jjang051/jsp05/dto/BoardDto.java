@@ -1,5 +1,12 @@
 package com.jjang051.jsp05.dto;
 
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class BoardDto {
     private int no;
     private String userID;
@@ -9,5 +16,4 @@ public class BoardDto {
     private String subject;
     private int hit;
     private String regDate;
-    //lombok
 }

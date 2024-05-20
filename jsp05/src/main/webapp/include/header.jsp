@@ -34,7 +34,7 @@
             <li><a href="../index/index.jsp" class="nav-link px-2 link-secondary">Home</a></li>
             <li><a href="../member/list-member.jsp" class="nav-link px-2">List</a></li>
             <% if (loggedID != null) { %>
-            <li><a href="../board/list.jsp" class="nav-link px-2">Board</a></li>
+            <li><a href="../board/list.jsp?page=1" class="nav-link px-2">Board</a></li>
             <%}%>
             <li><a href="../board/faq.jsp" class="nav-link px-2">FAQs</a></li>
         </ul>
