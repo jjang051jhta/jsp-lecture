@@ -14,6 +14,7 @@
     String sql = "select * from board  order by regdate desc";
     jdbcConnectionPool.pstmt = jdbcConnectionPool.conn.prepareStatement(sql);
     jdbcConnectionPool.rs = jdbcConnectionPool.pstmt.executeQuery();
+
 %>
 
 

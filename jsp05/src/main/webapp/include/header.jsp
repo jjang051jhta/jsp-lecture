@@ -1,6 +1,7 @@
 <%@ page import="com.jjang051.jsp05.utils.CookieManager" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="f" %>
 <%
     // null 또는 아이디
     String loggedID = (String) session.getAttribute("userId");
