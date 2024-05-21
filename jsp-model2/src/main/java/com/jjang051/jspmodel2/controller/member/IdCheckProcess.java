@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,11 +21,19 @@ public class IdCheckProcess extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userID = req.getParameter("userID");
         MemberDao memberDao = new MemberDao();
-        int result = memberDao.checkDuplicateId(userID); //0 or 1
+        int result = 0; //0 or 1
+        try {
+            result = memberDao.checkDuplicateId(userID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         Gson gson = new Gson();
         Map<String , Integer> countMap  = new HashMap<>();
         countMap.put("count",result);
         String json = gson.toJson(countMap);
+        /*PrintWriter out = resp.getWriter();
+        resp.setContentType("application/json; charset=UTF-8");
+        out.println(json);*/
         req.setAttribute("json",json); // jsp로 데이터 내려보내기
         RequestDispatcher dispatcher =
                 req.getRequestDispatcher("/WEB-INF/member/id-check.jsp");
