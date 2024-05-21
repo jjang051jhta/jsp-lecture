@@ -4,9 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
+@Builder
 public class MemberDto {
     //롬복 적용해서 get/set 빈생성자 싹다 생성자 toString
     private int no;
@@ -18,4 +19,5 @@ public class MemberDto {
     private String address;
     private String addressDetail;
     private String birth;
+
 }

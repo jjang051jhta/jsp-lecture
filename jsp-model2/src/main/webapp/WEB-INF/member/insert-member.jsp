@@ -58,7 +58,7 @@
 
     </div>
 <script>
-    let isIdChecked=true;
+    let isIdChecked=false;
     $("#btn-sign").on("click",function(){
         if($("#userID").val().trim()===""){
             alert("id는 필수입력 사항입니다.");
@@ -115,7 +115,7 @@
     //ajax - jquery axios fetch
     $("#btn-duplicate").on("click",function(){
          $.ajax({
-             url:"id-check-process.jsp",
+             url:"../member/id-check-process",
              data: {
                  userID:$("#userID").val()
              },

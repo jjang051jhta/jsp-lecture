@@ -6,6 +6,11 @@ import com.jjang051.jspmodel2.dto.MemberDto;
 import java.sql.SQLException;
 
 public class MemberDao extends JDBCConnectionPool {
+    //1. db연결
+    //2. sql 생성
+    //3. preparedstatement에 값 설정
+    //4. select(executeQuery  resultSet) 또는 나머지 것들(executeUpdate  int)
+
     public int insertMember(MemberDto memberDto) throws SQLException {
         int result = 0;
         try {
@@ -24,6 +29,22 @@ public class MemberDao extends JDBCConnectionPool {
             throw new RuntimeException(e);
         } finally {
             conn.close();
+        }
+        return result;
+    }
+
+    public int checkDuplicateId(String userID) {
+        int result = 0;
+        String sql = "select count(*) as count from member where userid = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,userID);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                result = rs.getInt("count");// 0, 1
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return result;
     }

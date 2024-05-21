@@ -9,12 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/member/info")
-public class InfoMember extends HttpServlet {
+@WebServlet("/member/delete")
+public class DeleteMember extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    RequestDispatcher dispatcher =
-            req.getRequestDispatcher("../member/info-member.jsp");
-    dispatcher.forward(req,resp);
+        RequestDispatcher dispatcher =
+                req.getRequestDispatcher("/WEB-INF/member/delete-member.jsp");
+        req.setAttribute("userID","jjang051");
+        dispatcher.forward(req,resp);
     }
 }
