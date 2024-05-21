@@ -33,7 +33,7 @@
                     <td>${member.userName}</td>
                     <td>${member.email}</td>
                     <td>${member.address}</td>
-                    <td><button class="btn btn-danger" id="btn-delete"
+                    <td><button class="btn btn-danger btn-delete"
                                 data-userid="${member.userID}">DEL</button></td>
                 </tr>
                 </c:forEach>
@@ -41,7 +41,7 @@
         </table>
     </div>
     <script>
-        $("#btn-delete").on("click",function(){
+        $(".btn-delete").on("click",function(){
             const sendUserID = $(this).data("userid");
             const parent = $(this).parent().parent();
             console.log(sendUserID);
@@ -53,6 +53,8 @@
                 method:"get",
                 success:function(data) {
                     console.log(data);
+                    console.log({"isDelete":"yes"});
+
                     if(data.isDelete==="yes") {
                         //tr 삭제
                         parent.remove();

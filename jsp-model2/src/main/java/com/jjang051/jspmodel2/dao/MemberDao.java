@@ -66,8 +66,8 @@ public class MemberDao extends JDBCConnectionPool {
                 loginMemberDto = new MemberDto();
                 loginMemberDto.setUserName(rs.getString("username"));
                 loginMemberDto.setUserID(rs.getString("userid"));
-
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

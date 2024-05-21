@@ -25,6 +25,7 @@ public class LoginMemberProcess extends HttpServlet {
             /*session.setAttribute("loggedId",logingMemberDto.getUserID());
             session.setAttribute("loggedName",logingMemberDto.getUserName());*/
             session.setAttribute("sessionMemberDto",logingMemberDto);
+            //pageContent, request, session, application
             resp.sendRedirect("../index/index");
         } else {
             ScriptWriter.alertAndBack(resp, "아이디 패스워드 확인해 주세요.");

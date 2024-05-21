@@ -26,10 +26,11 @@ public class AdminDeleteMember extends HttpServlet {
         } else {
             resultMap.put("isDelete","no");
         }
-        Gson gson = new Gson();
+        Gson gson = new Gson(); //자바 객체를 json변환해 준다.
+                                //json 자바 객체로도 변환해준다.
         String resultJSon = gson.toJson(resultMap);
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json; charset=UTF-8");
-        out.println(resultJSon);
+        out.println(resultMap);
     }
 }
