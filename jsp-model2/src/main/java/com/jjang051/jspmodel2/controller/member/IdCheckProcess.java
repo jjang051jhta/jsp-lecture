@@ -22,11 +22,9 @@ public class IdCheckProcess extends HttpServlet {
         String userID = req.getParameter("userID");
         MemberDao memberDao = new MemberDao();
         int result = 0; //0 or 1
-        try {
-            result = memberDao.checkDuplicateId(userID);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+        result = memberDao.checkDuplicateId(userID);
+
         Gson gson = new Gson();
         Map<String , Integer> countMap  = new HashMap<>();
         countMap.put("count",result);

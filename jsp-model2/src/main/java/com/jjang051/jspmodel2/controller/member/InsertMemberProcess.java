@@ -51,18 +51,12 @@ public class InsertMemberProcess extends HttpServlet {
 
         MemberDao memberDao = new MemberDao();
         int result = 0;
-        try {
-            result = memberDao.insertMember(insertMemberDto);
-            if(result > 0) {
-                resp.sendRedirect("../index/index");
-            } else {
-                ScriptWriter
-     .alertAndBack(resp,"알 수 없는 오류가 발생되었습니다. 잠시후 다시 시도해 주세요");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            memberDao.close();
+        result = memberDao.insertMember(insertMemberDto);
+        if(result > 0) {
+            resp.sendRedirect("../index/index");
+        } else {
+            ScriptWriter
+                    .alertAndBack(resp,"알 수 없는 오류가 발생되었습니다. 잠시후 다시 시도해 주세요");
         }
     }
 }

@@ -5,6 +5,8 @@ import com.jjang051.jspmodel2.controller.member.InfoMember;
 import com.jjang051.jspmodel2.dto.MemberDto;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDao extends JDBCConnectionPool {
     //1. db연결
@@ -12,7 +14,7 @@ public class MemberDao extends JDBCConnectionPool {
     //3. preparedstatement에 값 설정
     //4. select(executeQuery  resultSet) 또는 나머지 것들(executeUpdate  int)
 
-    public int insertMember(MemberDto memberDto) throws SQLException {
+    public int insertMember(MemberDto memberDto)  {
         int result = 0;
         try {
             String sql = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,?)";
@@ -29,12 +31,12 @@ public class MemberDao extends JDBCConnectionPool {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            conn.close();
+            this.close();
         }
         return result;
     }
 
-    public int checkDuplicateId(String userID) throws SQLException {
+    public int checkDuplicateId(String userID)  {
         int result = 0;
         String sql = "select count(*) as count from member where userid = ?";
         try {
@@ -47,7 +49,7 @@ public class MemberDao extends JDBCConnectionPool {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            conn.close();
+            this.close();
         }
         return result;
     }
@@ -69,11 +71,7 @@ public class MemberDao extends JDBCConnectionPool {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            this.close();
         }
         return loginMemberDto;
     }
@@ -99,7 +97,54 @@ public class MemberDao extends JDBCConnectionPool {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            this.close();
         }
         return infoMemberDto;
+    }
+
+    public List<MemberDto> listMember() {
+        List<MemberDto> memberList = null;
+        String sql = "select * from member";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            memberList = new ArrayList<>();
+            while (rs.next()) {
+                MemberDto memberDto =
+                MemberDto.builder()
+                        .no(rs.getInt("no"))
+                        .userID(rs.getString("userid"))
+                        .userName(rs.getString("username"))
+                        .email(rs.getString("email"))
+                        .postCode(rs.getInt("postcode"))
+                        .address(rs.getString("address"))
+                        .addressDetail(rs.getString("address_detail"))
+                        .birth(rs.getString("birth"))
+                .build();
+                memberList.add(memberDto);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return memberList;
+    }
+
+    public int deleteMember(String userID) {
+        int result = 0;
+        String sql = "delete from member where userid = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,userID);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return result;
     }
 }
