@@ -28,5 +28,10 @@
             <td>${infoMemberDto.birth}</td>
         </tr>
     </table>
+    <div>
+        <a href="../member/password-change" class="btn btn-primary">비밀번호 바꾸기</a>
+        <%--page 만들고 기본 비밀번호 만들고 바꿀 비밀번호 만들고 확인하는 비밀번호를 만들어서
+        비밀번호 바꾸기..--%>
+    </div>
 </div>
 <%@ include file="../include/footer.jsp"%>

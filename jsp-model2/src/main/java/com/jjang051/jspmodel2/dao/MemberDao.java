@@ -157,4 +157,23 @@ public class MemberDao extends JDBCConnectionPool {
         }
         return result;
     }
+
+
+    public int updateChangedPassword(String email, String changedPW) {
+        int result = 0;
+        String sql = "UPDATE MEMBER SET userpw = ? WHERE email = ?";
+        String salt = BCrypt.gensalt();
+        String encodedPW = BCrypt.hashpw(changedPW,salt); //salt뿌려서 비밀번호 만들기
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,encodedPW);
+            pstmt.setString(2,email);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return result;
+    }
 }

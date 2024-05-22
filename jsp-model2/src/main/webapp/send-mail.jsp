@@ -1,12 +1,7 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="com.jjang051.jspmodel2.mail.NaverMail" %><%--
-  Created by IntelliJ IDEA.
-  User: JHTA
-  Date: 2024-05-22
-  Time: 오전 11:48
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.jjang051.jspmodel2.mail.NaverMail" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Map<String,String> sendMailInfo = new HashMap<>();

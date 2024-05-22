@@ -1,6 +1,8 @@
 package com.jjang051.jspmodel2.mail;
 
 
+import jakarta.servlet.ServletContext;
+
 import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -12,7 +14,9 @@ public class NaverMail {
     private final Properties mailServerInfo;
     private final Authenticator authenticator;
 
-    public NaverMail() {
+    public NaverMail(ServletContext application) {
+        String naverID =  application.getInitParameter("NaverID");
+        String naverPw = application.getInitParameter("NaverPW");
         mailServerInfo = new Properties();
         mailServerInfo.put("mail.smtp.host","smtp.naver.com");
         mailServerInfo.put("mail.smtp.port","465");
@@ -25,7 +29,7 @@ public class NaverMail {
         authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-return new PasswordAuthentication("jjang051hta","QWERASDFzxcv2242");
+return new PasswordAuthentication(naverID,naverPw);
             }
         };
     }
