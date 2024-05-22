@@ -23,6 +23,7 @@
             </label>
         </div>
         <button class="btn btn-primary w-100 py-2" type="submit">Log in</button>
+        <a href="../member/password-search" class="btn btn-primary w-100 py-2 mt-2">비밀번호 찾기</a>
     </form>
 </main>
 <%@ include file="../include/footer.jsp" %>
