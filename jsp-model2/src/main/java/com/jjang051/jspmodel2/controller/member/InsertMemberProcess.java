@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,13 +19,16 @@ public class InsertMemberProcess extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userID = req.getParameter("userID");
-        String userPW = req.getParameter("userPW");
+        String userPW = req.getParameter("userPW"); //1234
         String userName = req.getParameter("userName");
         String userEmail = req.getParameter("userEmail");
         Integer postCode = Integer.parseInt(req.getParameter("postCode"));
         String address = req.getParameter("address");
         String detailAddress = req.getParameter("detailAddress");
         String birth = req.getParameter("birth");
+
+        String salt = BCrypt.gensalt();
+        userPW = BCrypt.hashpw(userPW,salt); //salt뿌려서 비밀번호 만들기
 
         //MemberDto insertMemberDto = new MemberDto();
         /*insertMemberDto.setUserID(userID);
@@ -46,6 +50,7 @@ public class InsertMemberProcess extends HttpServlet {
                 .addressDetail(detailAddress)
                 .birth(birth)
                 .address(address)
+                .grade("member")
                 .build();
 
 

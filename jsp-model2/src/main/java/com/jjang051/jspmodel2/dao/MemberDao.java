@@ -3,6 +3,7 @@ package com.jjang051.jspmodel2.dao;
 import com.jjang051.jspmodel2.connect.JDBCConnectionPool;
 import com.jjang051.jspmodel2.controller.member.InfoMember;
 import com.jjang051.jspmodel2.dto.MemberDto;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class MemberDao extends JDBCConnectionPool {
     public int insertMember(MemberDto memberDto)  {
         int result = 0;
         try {
-            String sql = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,?)";
+            String sql = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,memberDto.getUserID());
             pstmt.setString(2, memberDto.getUserPW());
@@ -26,7 +27,8 @@ public class MemberDao extends JDBCConnectionPool {
             pstmt.setInt(5, memberDto.getPostCode());
             pstmt.setString(6, memberDto.getAddress());
             pstmt.setString(7, memberDto.getAddressDetail());
-            pstmt.setString(8, memberDto.getBirth());
+            pstmt.setString(8, "member");
+            pstmt.setString(9, memberDto.getBirth());
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -54,18 +56,26 @@ public class MemberDao extends JDBCConnectionPool {
         return result;
     }
 
-    public MemberDto loginMember(String userID, String userPW) {
-        String sql = "select * from member where userid = ? and userpw = ?";
+    public MemberDto loginMember(String userID,String userPW) {
+        String sql = "select * from member where userid = ?";
         MemberDto loginMemberDto = null;
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,userID);
-            pstmt.setString(2,userPW);
+            //pstmt.setString(2,userPW);
             rs = pstmt.executeQuery();
             if(rs.next()){
-                loginMemberDto = new MemberDto();
-                loginMemberDto.setUserName(rs.getString("username"));
-                loginMemberDto.setUserID(rs.getString("userid"));
+                String decodePW = rs.getString("userpw"); //493894283
+                System.out.println("decodePW==="+decodePW);
+                //checkpw를 통해서 평문 비밀번호랑 암호화된 비밀번호 맞는지 체크
+                if(BCrypt.checkpw(userPW,decodePW)) {
+                    loginMemberDto = new MemberDto();
+                    loginMemberDto.setUserName(rs.getString("username"));
+                    loginMemberDto.setUserID(rs.getString("userid"));
+                    System.out.println("login success");
+                } else {
+                    System.out.println("login fail");
+                }
             }
 
         } catch (SQLException e) {

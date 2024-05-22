@@ -2,6 +2,7 @@ package com.jjang051.jspmodel2.controller.member;
 
 import com.google.gson.Gson;
 import com.jjang051.jspmodel2.dao.MemberDao;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,6 +30,10 @@ public class AdminDeleteMember extends HttpServlet {
         Gson gson = new Gson(); //자바 객체를 json변환해 준다.
                                 //json 자바 객체로도 변환해준다.
         String resultJSon = gson.toJson(resultMap);
+        /*req.setAttribute("resultJSon",resultJSon);
+        RequestDispatcher dispatcher =
+                req.getRequestDispatcher("/WEB-INF/member/jfkfdks.jsp");*/
+
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json; charset=UTF-8");
         out.println(resultMap);

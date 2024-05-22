@@ -17,14 +17,15 @@ public class LoginMemberProcess extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userID = req.getParameter("userID");
-        String userPW = req.getParameter("userPW");
-        MemberDao loginMembderDao = new MemberDao();
-        MemberDto logingMemberDto = loginMembderDao.loginMember(userID,userPW);
-        if(logingMemberDto!=null) {
+        String userPW = req.getParameter("userPW"); //1234
+                                                          //fjkdjsklfdjkls
+        MemberDao loginMemberDao = new MemberDao();
+        MemberDto loginMemberDto = loginMemberDao.loginMember(userID,userPW);
+        if(loginMemberDto!=null) {
             HttpSession session = req.getSession();
             /*session.setAttribute("loggedId",logingMemberDto.getUserID());
             session.setAttribute("loggedName",logingMemberDto.getUserName());*/
-            session.setAttribute("sessionMemberDto",logingMemberDto);
+            session.setAttribute("sessionMemberDto",loginMemberDto);
             //pageContent, request, session, application
             resp.sendRedirect("../index/index");
         } else {

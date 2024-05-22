@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.mindrot.jbcrypt.BCrypt" %><%--
   Created by IntelliJ IDEA.
   User: JHTA
   Date: 2024-05-21
@@ -7,27 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    int num = 10;
-    pageContext.setAttribute("keyNum","pageContext");
-    request.setAttribute("keyNum","request");
-    session.setAttribute("keyNum","session");
-    application.setAttribute("keyNum","application");
-    //RequestDispatcher dispatcher = request.getRequestDispatcher("request.jsp");
-    //dispatcher.forward(request,response);
-
-
-
+    //같은 비밀번호라고 하더라도 다르게 만들어주는 역할  (레인보우 테이블)
+    String salt = BCrypt.gensalt();
+    String hashPW = BCrypt.hashpw("1234",salt);
 %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-    <h1><%=num%></h1>
-    <h1>${pageScope.keyNum}</h1>
-    <h1>${requestScope.keyNum}</h1>
-    <h1>${sessionScope.keyNum}</h1>
-    <h1>${applicationScope.keyNum}</h1>
-    <a href="request.jsp">request</a>
+    <h1><%=salt%></h1>
+    <h1><%=hashPW%></h1>
 </body>
 </html>
