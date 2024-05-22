@@ -2,6 +2,7 @@ package com.jjang051.jspmodel2.controller.member;
 
 import com.jjang051.jspmodel2.connect.JDBCConnectionPool;
 import com.jjang051.jspmodel2.dao.MemberDao;
+import com.jjang051.jspmodel2.dto.Grade;
 import com.jjang051.jspmodel2.dto.MemberDto;
 import com.jjang051.jspmodel2.utils.ScriptWriter;
 import jakarta.servlet.ServletException;
@@ -27,6 +28,7 @@ public class InsertMemberProcess extends HttpServlet {
         String detailAddress = req.getParameter("detailAddress");
         String birth = req.getParameter("birth");
 
+
         String salt = BCrypt.gensalt();
         userPW = BCrypt.hashpw(userPW,salt); //salt뿌려서 비밀번호 만들기
 
@@ -50,7 +52,7 @@ public class InsertMemberProcess extends HttpServlet {
                 .addressDetail(detailAddress)
                 .birth(birth)
                 .address(address)
-                .grade("member")
+                .grade(Grade.MEMBER)
                 .build();
 
 

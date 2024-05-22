@@ -1,12 +1,17 @@
 package com.jjang051.jspmodel2.mail;
 
 
-import jakarta.servlet.ServletContext;
 
-import javax.mail.*;
+
+/*import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage;*/
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.ServletContext;
+
 import java.util.Map;
 import java.util.Properties;
 
@@ -37,6 +42,7 @@ return new PasswordAuthentication(naverID,naverPw);
     public  void sendMail(Map<String,String> sendMailInfo) throws MessagingException {
         //메일 보내는 세션 생성
         Session session = Session.getInstance(mailServerInfo,authenticator);
+
         session.setDebug(true);
 
         //메세지 작성

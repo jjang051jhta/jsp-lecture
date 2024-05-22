@@ -26,7 +26,7 @@
                 <%--varStatus는 반복문 돌때 그 환경 가르킴...--%>
 
                 <c:forEach var="member" items="${memberList}" varStatus="loop">
-                <tr>
+                <tr class="align-middle">
                     <td>${loop.count}</td>
                     <td>${member.no}</td>
                     <td><a href="../member/info?userID=${member.userID}">${member.userID}</a></td>
@@ -44,6 +44,7 @@
         $(".btn-delete").on("click",function(){
             const sendUserID = $(this).data("userid");
             const parent = $(this).parent().parent();
+            console.log(parent);
             console.log(sendUserID);
             $.ajax({
                 url:"../member/delete-ajax",

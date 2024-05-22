@@ -11,7 +11,7 @@
     sendMailInfo.put("content","1234");
     sendMailInfo.put("format","text/plain; charset=utf-8");
     try {
-        NaverMail naverMail = new NaverMail();
+        NaverMail naverMail = new NaverMail(application);
         naverMail.sendMail(sendMailInfo);
         System.out.println("success");
     } catch (Exception e) {

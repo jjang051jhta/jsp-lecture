@@ -2,6 +2,7 @@ package com.jjang051.jspmodel2.dao;
 
 import com.jjang051.jspmodel2.connect.JDBCConnectionPool;
 import com.jjang051.jspmodel2.controller.member.InfoMember;
+import com.jjang051.jspmodel2.dto.Grade;
 import com.jjang051.jspmodel2.dto.MemberDto;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -16,6 +17,7 @@ public class MemberDao extends JDBCConnectionPool {
     //4. select(executeQuery  resultSet) 또는 나머지 것들(executeUpdate  int)
 
     public int insertMember(MemberDto memberDto)  {
+        //UserRole role = UserRole.valueOf(roleStr);  // 문자열을 enum으로 변환
         int result = 0;
         try {
             String sql = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,?,?)";
@@ -27,7 +29,7 @@ public class MemberDao extends JDBCConnectionPool {
             pstmt.setInt(5, memberDto.getPostCode());
             pstmt.setString(6, memberDto.getAddress());
             pstmt.setString(7, memberDto.getAddressDetail());
-            pstmt.setString(8, "member");
+            pstmt.setString(8, memberDto.getGrade().name());
             pstmt.setString(9, memberDto.getBirth());
             result = pstmt.executeUpdate();
         } catch (SQLException e) {

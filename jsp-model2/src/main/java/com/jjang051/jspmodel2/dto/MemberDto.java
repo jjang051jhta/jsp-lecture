@@ -19,5 +19,5 @@ public class MemberDto {
     private String address;
     private String addressDetail;
     private String birth;
-    private String grade;
+    private Grade grade;
 }

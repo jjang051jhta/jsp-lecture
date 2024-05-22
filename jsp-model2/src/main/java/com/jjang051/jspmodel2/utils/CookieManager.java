@@ -13,10 +13,10 @@ public class CookieManager {
         cookie.setMaxAge(second);
         cookie.setPath("/");
         response.addCookie(cookie);
-    };
+    }
 
     public static String readCookie(HttpServletRequest request,String cookieName) {
-        Cookie cookies[] = request.getCookies();
+        Cookie[] cookies = request.getCookies();
         String cookieValue = "";
         if(cookies!=null) {
             for (int i = 0; i < cookies.length; i++) {
@@ -33,5 +33,5 @@ public class CookieManager {
     public static void deleteCookie(HttpServletResponse response,
                                     String cookieName) {
         createCookie(response,cookieName,null,0);
-    };
+    }
 }

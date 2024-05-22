@@ -36,6 +36,6 @@ public class AdminDeleteMember extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json; charset=UTF-8");
-        out.println(resultMap);
+        out.println(resultJSon);
     }
 }
