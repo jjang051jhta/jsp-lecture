@@ -34,44 +34,48 @@ public class InsertMemberProcess extends HttpServlet {
         String address = req.getParameter("address");
         String detailAddress = req.getParameter("detailAddress");
         String birth = req.getParameter("birth");
-
+        String renameProfile = "";   // jun_20250523-151234.jpg
+        String originalProfile = ""; // jun.jpg
         Part profile = req.getPart("profile");
+        String renameFile="";
 
-        String uploadDir = "C:\\Users\\JHTA\\Desktop\\upload";
-
-        System.out.println(profile);
         String partHeader = profile.getHeader("content-disposition");
-        System.out.println(partHeader);
         String partArray[] = partHeader.split("filename=");
-        System.out.println(partHeader.split("filename="));
-        System.out.println("partArray[0]==="+partArray[0]);
-        System.out.println("partArray[1]==="+partArray[1]);
-        String orignalFileName =
+        String originalFileName =
                 partArray[1].trim().replace("\"","");
-        if(!orignalFileName.isEmpty()) {
-            profile.write(uploadDir+ File.separator+orignalFileName);
+        //  jun.jpg
+
+        //localhost:8080/upload/
+		String serverUploadDir = this.getServletContext().getRealPath("upload");
+        System.out.println("serverUploadDir==="+serverUploadDir);
+		File dir = new File(serverUploadDir);
+		if(!dir.exists()) {
+			dir.mkdir();
+		}
+        if(!originalFileName.isEmpty()) {
+            profile.write(serverUploadDir+File.separator+originalFileName);
+            //localhost:8080/upload/jun.jpg
             String fileName =
-            orignalFileName.substring(0,orignalFileName.lastIndexOf("."));
+            originalFileName.substring(0,originalFileName.lastIndexOf("."));
             String extention =
-            orignalFileName.substring(orignalFileName.lastIndexOf("."));
+            originalFileName.substring(originalFileName.lastIndexOf("."));
 
             LocalDateTime now =  LocalDateTime.now();
-            System.out.println(now);
             DateTimeFormatter dateTimeFormatter =
                     DateTimeFormatter.ofPattern("_YYYYMMdd_hhmmss");
             String formatNow = now.format(dateTimeFormatter);
-            System.out.println(formatNow);
-            String renameFile = fileName+formatNow+extention;
-            System.out.println(renameFile);
-            File oldFile = new File(uploadDir+File.separator+orignalFileName);
-            File newFile = new File(uploadDir+File.separator+renameFile);
-            oldFile.renameTo(newFile);
+            renameFile = fileName+formatNow+extention;
+            //jun_20240513-151234.jpg
+
+            originalProfile = serverUploadDir+File.separator+originalFileName;
+            //localhost:8080/upload/jun.jpg
+            renameProfile = serverUploadDir+File.separator+renameFile;
+            //localhost:8080/upload/jun_20240513-151234.jpg
+
+            File oldFile = new File(originalProfile);
+            File newFile = new File(renameProfile);
+            oldFile.renameTo(newFile); //덮어쓰기
         }
-
-        //partHeader에서 filename을 통해서 올라온 파일명 추출
-        //img (4)_fjdskfjdkl.jpg  //  originalfilename, renameFilename
-        // img (4)_fjdskfjdkl.jpg
-
 
         String salt = BCrypt.gensalt();
         userPW = BCrypt.hashpw(userPW,salt); //salt뿌려서 비밀번호 만들기
@@ -88,7 +92,12 @@ public class InsertMemberProcess extends HttpServlet {
                 .birth(birth)
                 .address(address)
                 .grade("member")
+                .originalProfile(originalProfile)
+                .renameProfile(renameFile)
                 .build();
+            //localhost:8080/upload/jun.jpg
+           //localhost:8080/upload/jun_202405231513334.jpg
+
 
 
         MemberDao memberDao = new MemberDao();

@@ -20,4 +20,6 @@ public class MemberDto {
     private String addressDetail;
     private String birth;
     private String grade;
+    private String originalProfile;
+    private String renameProfile;
 }

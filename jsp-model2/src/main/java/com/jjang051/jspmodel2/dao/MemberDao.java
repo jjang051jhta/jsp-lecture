@@ -20,7 +20,7 @@ public class MemberDao extends JDBCConnectionPool {
         //UserRole role = UserRole.valueOf(roleStr);  // 문자열을 enum으로 변환
         int result = 0;
         try {
-            String sql = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into member values(member_seq.nextval,?,?,?,?,?,?,?,?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,memberDto.getUserID());
             pstmt.setString(2, memberDto.getUserPW());
@@ -31,6 +31,9 @@ public class MemberDao extends JDBCConnectionPool {
             pstmt.setString(7, memberDto.getAddressDetail());
             pstmt.setString(8, "member");
             pstmt.setString(9, memberDto.getBirth());
+            pstmt.setString(10, memberDto.getOriginalProfile());
+            pstmt.setString(11, memberDto.getRenameProfile());
+
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -104,6 +107,7 @@ public class MemberDao extends JDBCConnectionPool {
                         .addressDetail(rs.getString("address_detail"))
                         .postCode(rs.getInt("postcode"))
                         .birth(rs.getString("birth"))
+                        .renameProfile(rs.getString("renameProfile"))
                .build();
                 //infoMemberDto.setUserName(rs.getString("username"));
             }
