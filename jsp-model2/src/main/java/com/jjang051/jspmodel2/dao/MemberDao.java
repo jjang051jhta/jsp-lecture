@@ -29,7 +29,7 @@ public class MemberDao extends JDBCConnectionPool {
             pstmt.setInt(5, memberDto.getPostCode());
             pstmt.setString(6, memberDto.getAddress());
             pstmt.setString(7, memberDto.getAddressDetail());
-            pstmt.setString(8, memberDto.getGrade().name());
+            pstmt.setString(8, "member");
             pstmt.setString(9, memberDto.getBirth());
             result = pstmt.executeUpdate();
         } catch (SQLException e) {

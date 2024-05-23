@@ -2,7 +2,7 @@
 <%@ include file="../include/header.jsp" %>
     <div class="container">
         <h2 class="mt-5 mb-5">회원가입</h2>
-        <form action="../member/insert-process" method="post" enctype="multipart/form-data">
+        <form action="../member/insert-process" method="post" enctype="multipart/form-data" >
             <div class="mb-3">
                 <label for="userID" class="form-label">USER ID</label>
                 <input type="text" class="form-control" id="userID" placeholder="user id" name="userID">
@@ -33,7 +33,7 @@
             <div class="mb-3">
                 <label for="postCode" class="form-label" >POST CODE</label>
                 <div class="row">
-                    <div class="col-auto"><input type="text" class="form-control" id="postCode" placeholder="post code" name="postCode" readonly></div>
+                    <div class="col-auto"><input type="text" class="form-control" id="postCode" placeholder="post code" name="postCode"></div>
                     <div class="col-auto px-0"><button type="button" id="btn-postcode" class="btn btn-dark">우편번호 찾기</button></div>
                 </div>
             </div>
@@ -50,8 +50,12 @@
                 <input type="date" class="form-control" id="birth" placeholder="select birth day" name="birth">
             </div>
             <div class="mb-3">
-                <label for="formFile" class="form-label">PROFILE</label>
-                <input class="form-control" type="file" id="formFile">
+                <label for="profile" class="form-label">PROFILE</label>
+                <input class="form-control" type="file" id="profile"
+                       name="profile" accept="image/gif,image/jpg,image/png">
+            </div>
+            <div class="mb-3">
+                <div id="preview">미리보기 이미지 들어가는 곳</div>
             </div>
             <div>
                 <button class="btn btn-primary" id="btn-sign">SIGN IN</button>
@@ -60,6 +64,13 @@
         </form>
 
     </div>
+    <%--<div class="a" style="width:300px; height: 300px ; border: 1px solid #000;">
+        a
+        <div class="b" style="width:200px; height: 200px; border: 1px solid #000;">
+            b
+            <div class="c"  style="width:100px; height: 100px; border: 1px solid #000;">c</div>
+        </div>
+    </div>--%>
 <script>
     let isIdChecked=false;
     $("#btn-sign").on("click",function(){
@@ -226,5 +237,45 @@
     }
     // idCheck가 되지 않으면 못날아가게
     // password 맞지 않으면 못날아가게
+    $("#profile").on("change",function(e){
+        //console.log(e);
+        //console.log(e.currentTarget.files[0]);
+        const file = e.currentTarget.files[0];
+        //"fdfkdsk.lfd.mp3"
+        if (!file) { // 파일이 선택되지 않은 경우
+            $("#preview").html(""); // 미리보기 영역 비우기
+            return false;
+        }
+        const extension =
+            file.name.substring(file.name.lastIndexOf(".")+1).toLowerCase();
+        //console.log(file);
+
+        if(!(extension==="png" || extension==="jpg" || extension==="gif")) {
+            alert("이미지 파일만 업로드 가능합니다.");
+            $(this).val("");
+            return false;
+        } else {
+            const profileReader = new FileReader();
+            profileReader.addEventListener("load",function(e){
+                console.log(e);
+                const img = e.currentTarget.result;
+                $("#preview").html(`<img src="\${img}">`);
+            });
+            profileReader.readAsDataURL(file);
+        }
+    })
+    /*
+    //만약에 새로 생성되는 item
+    $(".a").on("click",function(e) {
+        console.log(e.currentTarget);
+        console.log(e.target);
+        $("body")
+            .append("<div class='d' style='width:100px; height: 100px; border: 1px solid #000;'>d</div>")
+    });
+    //이벤트 위임
+    $("body").on("click",".d",function(e) {
+        console.log("ddd");
+    });
+     */
 </script>
 <%@ include file="../include/footer.jsp"%>

@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 public class InsertMemberProcess extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("postCode==="+req.getParameter("postCode"));
         String userID = req.getParameter("userID");
         String userPW = req.getParameter("userPW"); //1234
         String userName = req.getParameter("userName");
@@ -29,18 +31,14 @@ public class InsertMemberProcess extends HttpServlet {
         String birth = req.getParameter("birth");
 
 
+        String uploadDir = "C:\\Users\\JHTA\\Desktop\\upload";
+
+        Part profile = req.getPart("profile");
+
+
         String salt = BCrypt.gensalt();
         userPW = BCrypt.hashpw(userPW,salt); //salt뿌려서 비밀번호 만들기
 
-        //MemberDto insertMemberDto = new MemberDto();
-        /*insertMemberDto.setUserID(userID);
-        insertMemberDto.setUserPW(userPW);
-        insertMemberDto.setEmail(userEmail);
-        insertMemberDto.setAddress(address);
-        insertMemberDto.setPostCode(postCode);
-        insertMemberDto.setBirth(birth);
-        insertMemberDto.setUserName(userName);
-        insertMemberDto.setAddressDetail(detailAddress);*/
 
         //builder 패턴 롬복이 재공하는 기능...
         MemberDto insertMemberDto = MemberDto.builder()
@@ -52,7 +50,7 @@ public class InsertMemberProcess extends HttpServlet {
                 .addressDetail(detailAddress)
                 .birth(birth)
                 .address(address)
-                .grade(Grade.MEMBER)
+                .grade("member")
                 .build();
 
 
