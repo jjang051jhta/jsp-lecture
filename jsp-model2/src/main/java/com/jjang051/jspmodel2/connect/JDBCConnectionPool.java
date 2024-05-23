@@ -16,19 +16,6 @@ public class JDBCConnectionPool {
 
     public JDBCConnectionPool() {
         // jdbc connection  할때마다 연결
-        connetion();
-    }
-    public void close() {
-        try {
-            if(rs!=null) rs.close();
-            if(pstmt!=null) pstmt.close();
-            if(conn!=null) conn.close();
-            System.out.println("connection pool return");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void connetion() {
         try {
             Context initContext = new InitialContext();
             Context context = (Context)initContext.lookup("java:comp/env");
@@ -43,6 +30,17 @@ public class JDBCConnectionPool {
             throw new RuntimeException(e);
         }
     }
+    public void close() {
+        try {
+            if(rs!=null) rs.close();
+            if(pstmt!=null) pstmt.close();
+            if(conn!=null) conn.close();
+            System.out.println("connection pool return");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
 
