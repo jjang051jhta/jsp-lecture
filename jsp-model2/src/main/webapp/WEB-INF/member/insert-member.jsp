@@ -2,14 +2,15 @@
 <%@ include file="../include/header.jsp" %>
     <div class="container">
         <h2 class="mt-5 mb-5">회원가입</h2>
-        <form action="../member/insert-process" method="post" enctype="multipart/form-data" >
+
+        <form action="../member/insert-process" method="post"
+              enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="userID" class="form-label">USER ID</label>
                 <input type="text" class="form-control" id="userID" placeholder="user id" name="userID">
                 <button type="button" id="btn-duplicate" class="btn btn-dark mt-2">아이디 중복 체크</button>
                 <%--<a href="" id="btn-duplicate02" class="btn btn-dark mt-2">아이디 중복 체크</a>--%>
             </div>
-
             <div class="mb-3">
                 <label for="userPW" class="form-label">PASSWORD</label>
                 <input type="password" class="form-control" id="userPW" placeholder="password" name="userPW">
