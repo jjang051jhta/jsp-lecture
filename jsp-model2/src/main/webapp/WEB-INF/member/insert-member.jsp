@@ -2,7 +2,7 @@
 <%@ include file="../include/header.jsp" %>
     <div class="container">
         <h2 class="mt-5 mb-5">회원가입</h2>
-        <form action="../member/insert-process" method="post">
+        <form action="../member/insert-process" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="userID" class="form-label">USER ID</label>
                 <input type="text" class="form-control" id="userID" placeholder="user id" name="userID">
@@ -37,7 +37,6 @@
                     <div class="col-auto px-0"><button type="button" id="btn-postcode" class="btn btn-dark">우편번호 찾기</button></div>
                 </div>
             </div>
-
             <div class="mb-3">
                 <label for="address" class="form-label">ADDRESS</label>
                 <input type="text" class="form-control" id="address" placeholder="address" name="address" readonly>
@@ -49,6 +48,10 @@
             <div class="mb-3">
                 <label for="birth" class="form-label">BIRTH</label>
                 <input type="date" class="form-control" id="birth" placeholder="select birth day" name="birth">
+            </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">PROFILE</label>
+                <input class="form-control" type="file" id="formFile">
             </div>
             <div>
                 <button class="btn btn-primary" id="btn-sign">SIGN IN</button>

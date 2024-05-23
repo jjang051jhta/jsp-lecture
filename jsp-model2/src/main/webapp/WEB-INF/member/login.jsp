@@ -17,7 +17,9 @@
 
         <div class="form-check text-start my-3">
             <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="saveID"
-                   value="yes">
+                   value="yes"
+                   <c:if test="${not empty cookie.loggedID}">checked</c:if>
+            >
             <label class="form-check-label" for="flexCheckDefault">
                 Remember me
             </label>
