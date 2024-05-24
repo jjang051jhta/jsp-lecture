@@ -25,3 +25,6 @@
 .content {
     white-space: pre-line;
 }
+.ck-editor__main .ck-content {
+    height: 300px;
+}
