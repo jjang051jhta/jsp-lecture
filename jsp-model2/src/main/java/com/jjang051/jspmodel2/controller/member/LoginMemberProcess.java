@@ -25,9 +25,13 @@ public class LoginMemberProcess extends HttpServlet {
         MemberDto loginMemberDto = loginMemberDao.loginMember(userID,userPW);
         if(loginMemberDto!=null) {
             HttpSession session = req.getSession();
-            /*session.setAttribute("loggedId",logingMemberDto.getUserID());
-            session.setAttribute("loggedName",logingMemberDto.getUserName());*/
+            //cookie session
+            /*
+            session.setAttribute("loggedId",logingMemberDto.getUserID());
+            session.setAttribute("loggedName",logingMemberDto.getUserName());
+            */
             session.setAttribute("sessionMemberDto",loginMemberDto);
+            //userID, userName,renameProfile
             //pageContent, request, session, application
             if(saveID!=null && saveID.equals("yes")) {
                 CookieManager

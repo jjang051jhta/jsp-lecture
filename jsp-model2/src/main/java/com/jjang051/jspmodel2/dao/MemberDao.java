@@ -77,6 +77,8 @@ public class MemberDao extends JDBCConnectionPool {
                     loginMemberDto = new MemberDto();
                     loginMemberDto.setUserName(rs.getString("username"));
                     loginMemberDto.setUserID(rs.getString("userid"));
+                    loginMemberDto.setRenameProfile(rs.getString("renameprofile"));
+
                     System.out.println("login success");
                 } else {
                     System.out.println("login fail");

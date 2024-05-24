@@ -2,6 +2,7 @@
 <%@ include file="../include/header.jsp" %>
     <div class="container">
         <h2 class="mt-5 mb-5">회원가입</h2>
+        <%--서버내에 있는 resource에 있는 것들은 사용 가능--%>
 
         <form action="../member/insert-process" method="post"
               enctype="multipart/form-data">

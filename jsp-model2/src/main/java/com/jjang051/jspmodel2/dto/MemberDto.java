@@ -20,6 +20,8 @@ public class MemberDto {
     private String addressDetail;
     private String birth;
     private String grade;
+    //실제 이름
     private String originalProfile;
+    //바뀐 이름  (a - jun.jpg   b - jun.jpg   )
     private String renameProfile;
 }
