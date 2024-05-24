@@ -4,6 +4,8 @@ import com.jjang051.jspmodel2.connect.JDBCConnectionPool;
 import com.jjang051.jspmodel2.dto.BoardDto;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoardDao extends JDBCConnectionPool {
 
@@ -60,5 +62,34 @@ public class BoardDao extends JDBCConnectionPool {
             this.close();
         }
         return boardDto;
+    }
+
+    public List<BoardDto> getBoardList() {
+        List<BoardDto> boardList = null;
+        String sql = "select * from board";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            boardList = new ArrayList<>();
+            while(rs.next()) {
+                BoardDto boardDto =
+                        BoardDto.builder()
+                                .no(rs.getInt("no"))
+                                .subject(rs.getString("subject"))
+                                .content(rs.getString("content"))
+                                .hit(rs.getInt("hit"))
+                                .regDate(rs.getString("regdate"))
+                                .userID(rs.getString("userid"))
+                                .userName(rs.getString("username"))
+                                .password(rs.getString("password"))
+                                .build();
+                boardList.add(boardDto);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return boardList;
     }
 }

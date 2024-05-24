@@ -27,12 +27,26 @@
         </div>
     </form>
 </div>
-<script src="/js/ckeditor.js"></script>
+<%--<script src="/js/ckeditor.js"></script>--%>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <script>
     ClassicEditor
-        .create( document.querySelector( "#content" ) )
+        .create( document.querySelector( "#content" ),{
+            /*plugins: [CKFinder],*/
+            ckfinder: {
+                uploadUrl:"../board/upload",
+            }
+        })
         .catch( error => {
             console.error( error );
         } );
+
+    $.ajax({
+        url:"../board/upload",
+        success:function(data) {
+            console.log(data);
+            //이미지가 어디에 저장되었는지 경로를 알려줘야 함...
+        }
+    })
 </script>
 <%@ include file="../include/footer.jsp"%>
