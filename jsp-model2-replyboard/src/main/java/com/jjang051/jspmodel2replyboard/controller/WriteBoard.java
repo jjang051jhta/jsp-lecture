@@ -32,7 +32,7 @@ public class WriteBoard extends HttpServlet {
         req.getParameter("userID");
         req.getParameter("userName");*/
         BoardDao maxBoardDao = new BoardDao();
-        int regroup = maxBoardDao.getMaxRegroup();
+        int regroup = maxBoardDao.getMaxRegroup(); // 3
         BoardDto boardDto =
         BoardDto.builder()
                 .subject(req.getParameter("subject"))

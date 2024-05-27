@@ -30,6 +30,7 @@ public class ReplyBoard extends HttpServlet {
                         .build();
         BoardDao updateRelevelDao = new BoardDao();
         int result = updateRelevelDao.updateRelevel(boardDto); // 나 이외의 것들을 업데이트
+        System.out.println("updateRelevel result==="+result);
         BoardDto boardDto02 =
                 BoardDto.builder()
                         .subject(req.getParameter("subject"))

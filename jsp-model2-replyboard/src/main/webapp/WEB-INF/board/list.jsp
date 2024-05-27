@@ -18,7 +18,7 @@
       <col style="width:80px">
       <col style="width:80px">
       <col style="width:80px">
-      <col style="width:250px">
+      <col style="width:150px">
     </colgroup>
     <thead>
     <tr>
@@ -34,9 +34,23 @@
     </thead>
     <tbody>
       <c:forEach items="${boardList}" var="boardDto" varStatus="loop">
-      <tr>
+      <tr class="align-middle">
         <td>${loop.count}</td>
-        <td><a href="../board/view?no=${boardDto.no}">${boardDto.subject}</a></td>
+        <td>
+          <c:choose>
+            <c:when test="${boardDto.restep > 1}">
+              <a href="../board/view?no=${boardDto.no}"
+                 class="step step${boardDto.restep}">
+                <i class="bi bi-arrow-return-right"></i>${boardDto.subject}
+              </a>
+            </c:when>
+            <c:otherwise>
+              <a href="../board/view?no=${boardDto.no}">
+                ${boardDto.subject}
+              </a>
+            </c:otherwise>
+          </c:choose>
+        </td>
         <td>${boardDto.userName}</td>
         <td>${boardDto.regroup}</td>
         <td>${boardDto.relevel}</td>

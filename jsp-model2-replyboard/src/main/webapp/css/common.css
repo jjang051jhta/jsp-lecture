@@ -28,3 +28,14 @@
 .ck-editor__main .ck-content {
     height: 300px;
 }
+
+.step2 {
+    padding-left: 20px;
+}
+.step3 {
+    padding-left: 40px;
+}
+.step4 {
+    padding-left: 60px;
+}
+
