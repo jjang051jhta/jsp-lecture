@@ -41,6 +41,7 @@
     <div class="mt-5">
         <a href="../board/write" class="btn btn-primary">WRITE</a>
         <a href="../board/reply?regroup=${boardDto.regroup}&relevel=${boardDto.relevel}&restep=${boardDto.restep}" class="btn btn-primary">REPLY</a>
+        <a href="../board/delete?no=${boardDto.no}" class="btn btn-primary">DELETE</a>
     </div>
 </div>
 <%@ include file="../include/footer.jsp" %>

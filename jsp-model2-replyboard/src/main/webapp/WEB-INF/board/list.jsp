@@ -37,17 +37,34 @@
       <tr class="align-middle">
         <td>${loop.count}</td>
         <td>
+         <%-- available = ${boardDto.available}--%>
           <c:choose>
-            <c:when test="${boardDto.restep > 1}">
-              <a href="../board/view?no=${boardDto.no}"
-                 class="step step${boardDto.restep}">
-                <i class="bi bi-arrow-return-right"></i>${boardDto.subject}
-              </a>
+            <c:when test="${boardDto.available > 0}">
+              <c:choose>
+                <c:when test="${boardDto.restep > 1}">
+                  <a href="../board/view?no=${boardDto.no}"
+                     class="step step${boardDto.restep}">
+                    <i class="bi bi-arrow-return-right"></i>${boardDto.subject}
+                  </a>
+                </c:when>
+                <c:otherwise>
+                  <a href="../board/view?no=${boardDto.no}">
+                    ${boardDto.subject}
+                  </a>
+                </c:otherwise>
+              </c:choose>
             </c:when>
             <c:otherwise>
-              <a href="../board/view?no=${boardDto.no}">
-                ${boardDto.subject}
-              </a>
+              <c:choose>
+                <c:when test="${boardDto.restep > 1}">
+                  <span class="step step${boardDto.restep}">
+                    <i class="bi bi-arrow-return-right"></i>삭제된 글입니다.
+                  </span>
+                </c:when>
+                <c:otherwise>
+                  <span>삭제된 글입니다.</span>
+                </c:otherwise>
+              </c:choose>
             </c:otherwise>
           </c:choose>
         </td>

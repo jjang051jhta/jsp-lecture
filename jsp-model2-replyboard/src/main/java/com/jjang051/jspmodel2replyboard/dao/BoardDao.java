@@ -14,7 +14,7 @@ public class BoardDao extends JDBCConnectionPool {
 
         int result = 0;
         String sql =
-           "insert into board values(board_seq.nextval,?,?,?,?,?,?,?,?,1,sysdate)";
+           "insert into board values(board_seq.nextval,?,?,?,?,?,?,?,?,1,sysdate,1)";
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,boardDto.getSubject());
@@ -71,6 +71,7 @@ public class BoardDao extends JDBCConnectionPool {
                         .restep(rs.getInt("restep"))
                         .hit(rs.getInt("hit"))
                         .regDate(rs.getString("regdate"))
+                        .available(rs.getInt("available"))
                         .build();
                 boardList.add(boardDto);
             }
@@ -146,6 +147,22 @@ public class BoardDao extends JDBCConnectionPool {
             pstmt.setInt(6,boardDto.getRegroup());
             pstmt.setInt(7,boardDto.getRelevel());
             pstmt.setInt(8,boardDto.getRestep());
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return result;
+    }
+
+    public int deleteBoard(BoardDto boardDto) {
+        int result = 0;
+        String sql = "update board set available = 0 where no = ? and password = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,boardDto.getNo());
+            pstmt.setString(2,boardDto.getPassword());
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

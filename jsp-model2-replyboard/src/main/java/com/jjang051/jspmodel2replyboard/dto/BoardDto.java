@@ -20,4 +20,5 @@ public class BoardDto {
     private int restep;
     private int hit;
     private String regDate;
+    private int available;
 }
