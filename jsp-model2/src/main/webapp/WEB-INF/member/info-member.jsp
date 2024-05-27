@@ -10,7 +10,7 @@
                     ${request.contextPath}
                     localhost:8080/upload/jun_20240523154512.jpg
                 --%>
-                <img src="${request.contextPath}/upload/${infoMemberDto.renameProfile}"
+                <img src="${request.contextPath}/upload02/${infoMemberDto.renameProfile}"
                      class="profile">
             </td>
         </tr>

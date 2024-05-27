@@ -46,13 +46,13 @@ public class InsertMemberProcess extends HttpServlet {
 
         //프론트에서 넘어온 파일 이름...
         String fileName = profile.getSubmittedFileName();
-        String serverUploadDir =
-                this.getServletContext().getRealPath("upload");
-        File dir = new File(serverUploadDir);
+        String serverUploadDir = "C:\\Users\\JHTA\\Desktop\\upload";
+                //this.getServletContext().getRealPath("upload");
+        //File dir = new File(serverUploadDir);
         //serverUploadDir안에 있는 것들은 서버에서 사용가능핟.
-        if(!dir.exists()) {
+        /*if(!dir.exists()) {
             dir.mkdir();
-        }
+        }*/
         if(!fileName.isEmpty()) {
             //파일이 넘어왔음... 특정경로에 옮겨 놓기...
             profile.write(serverUploadDir+File.separator+fileName);

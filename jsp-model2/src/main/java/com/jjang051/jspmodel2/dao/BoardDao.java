@@ -13,7 +13,7 @@ public class BoardDao extends JDBCConnectionPool {
         int result = 0;
 
         String sql =
-                "insert into board values(board_seq.nextval,?,?,?,?,?,1,sysdate)";
+                "insert into board values(board_seq.nextval,?,?,?,?,?,?,?,?,1,sysdate)";
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,writeBoardDto.getSubject());

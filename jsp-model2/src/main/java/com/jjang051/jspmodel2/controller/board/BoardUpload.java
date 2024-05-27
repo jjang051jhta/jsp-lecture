@@ -68,8 +68,10 @@ public class BoardUpload extends HttpServlet {
         map.put("uploaded",true);
         map.put("url",req.getContextPath()+"/upload/"+renameFile);
         String resultJSON = gson.toJson(map);
-        PrintWriter out = resp.getWriter();
+        req.setAttribute("resultJSON",resultJSON);
+        req.getRequestDispatcher("/WEB-INF/board/image-uploaded.jsp").forward(req,resp);
+        /*PrintWriter out = resp.getWriter();
         resp.setContentType("application/json; charset=utf-8");
-        out.println(resultJSON);
+        out.println(resultJSON);*/
     }
 }
