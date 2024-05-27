@@ -52,7 +52,7 @@ public class BoardDao extends JDBCConnectionPool {
 
     public List<BoardDto> getList() {
         List<BoardDto> boardList = null;
-        String sql = "select * from board order by regroup desc";
+        String sql = "select * from board order by regroup desc, relevel asc";
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
@@ -113,5 +113,45 @@ public class BoardDao extends JDBCConnectionPool {
         }
 
         return boardDto;
+    }
+
+    public int updateRelevel(BoardDto boardDto) {
+        int result = 0;
+        String sql =
+     "UPDATE board SET relevel = relevel + 1 WHERE regroup = ? AND relevel > ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,boardDto.getRegroup());
+            pstmt.setInt(2,boardDto.getRelevel());
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return result;
+    }
+
+    public int replyBoard(BoardDto boardDto) {
+        int result = 0;
+        String sql =
+                "insert into board values(board_seq.nextval,?,?,?,?,?,?,?,?,1,sysdate)";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,boardDto.getSubject());
+            pstmt.setString(2,boardDto.getContent());
+            pstmt.setString(3,boardDto.getUserID());
+            pstmt.setString(4,boardDto.getUserName());
+            pstmt.setString(5,boardDto.getPassword());
+            pstmt.setInt(6,boardDto.getRegroup());
+            pstmt.setInt(7,boardDto.getRelevel());
+            pstmt.setInt(8,boardDto.getRestep());
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return result;
     }
 }

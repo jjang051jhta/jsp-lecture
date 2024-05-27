@@ -15,6 +15,9 @@
       <col>
       <col style="width:150px">
       <col style="width:80px">
+      <col style="width:80px">
+      <col style="width:80px">
+      <col style="width:80px">
       <col style="width:250px">
     </colgroup>
     <thead>
@@ -22,6 +25,9 @@
       <th>NO</th>
       <th>SUBJECT</th>
       <th>WRITER</th>
+      <th>REGROUP</th>
+      <th>RELEVEL</th>
+      <th>RESTEP</th>
       <th>HIT</th>
       <th>DATE</th>
     </tr>
@@ -32,6 +38,9 @@
         <td>${loop.count}</td>
         <td><a href="../board/view?no=${boardDto.no}">${boardDto.subject}</a></td>
         <td>${boardDto.userName}</td>
+        <td>${boardDto.regroup}</td>
+        <td>${boardDto.relevel}</td>
+        <td>${boardDto.restep}</td>
         <td>${boardDto.hit}</td>
         <td>${boardDto.regDate}</td>
       </tr>

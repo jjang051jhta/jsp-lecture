@@ -23,10 +23,14 @@ public class ReplyBoard extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        BoardDao maxBoardDao = new BoardDao();
-        int regroup = maxBoardDao.getMaxRegroup();
         BoardDto boardDto =
+                BoardDto.builder()
+                        .regroup(Integer.parseInt(req.getParameter("regroup")))
+                        .relevel(Integer.parseInt(req.getParameter("relevel")))
+                        .build();
+        BoardDao updateRelevelDao = new BoardDao();
+        int result = updateRelevelDao.updateRelevel(boardDto); // 나 이외의 것들을 업데이트
+        BoardDto boardDto02 =
                 BoardDto.builder()
                         .subject(req.getParameter("subject"))
                         .content(req.getParameter("content"))
@@ -34,12 +38,13 @@ public class ReplyBoard extends HttpServlet {
                         .userID(req.getParameter("userID"))
                         .userName(req.getParameter("userName"))
                         .regroup(Integer.parseInt(req.getParameter("regroup")))
-                        .relevel(Integer.parseInt(req.getParameter("relevel")))
-                        .restep(Integer.parseInt(req.getParameter("restep")))
+                        .relevel(Integer.parseInt(req.getParameter("relevel"))+1)
+                        .restep(Integer.parseInt(req.getParameter("restep"))+1)
                         .build();
-        BoardDao boardDao = new BoardDao();
-        int result = boardDao.writeBoard(boardDto);
-        if(result>0) {
+        BoardDao replyBoardDao = new BoardDao();
+        int result02 = replyBoardDao.replyBoard(boardDto02);
+
+        if(result02>0) {
             //원글이 입력됨...
             resp.sendRedirect("../board/list");
         } else {
