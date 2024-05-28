@@ -53,7 +53,7 @@ public class ListBoard extends HttpServlet {
         List<BoardDto> boardList =
                 boardDao.getPageList(listPerPage*(start-1)+1,listPerPage*start);
         req.setAttribute("boardList",boardList);
-        //req.setAttribute("totalPage",totalPage);
+        req.setAttribute("totalPagination",totalPagination);
         req.setAttribute("paginationStart",paginationStart);
         req.setAttribute("paginationEnd",paginationEnd);
         req.setAttribute("paginationPerPage",paginationPerPage);

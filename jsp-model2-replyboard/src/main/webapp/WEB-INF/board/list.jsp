@@ -79,12 +79,28 @@
     </tbody>
   </table>
   <nav aria-label="Page navigation example" class="mt-5 mb-5">
+    <div class="d-flex justify-content-center mb-5">
+      <span>paginationStart==${paginationStart} / </span>
+      <span>paginationEnd==${paginationEnd} / </span>
+      <span>paginationPerPage==${paginationPerPage} / </span>
+      <span>totalPagination==${totalPagination}</span>
+
+
+    </div>
     <ul class="pagination d-flex justify-content-center">
+      <c:if test="${paginationStart!=1}">
+        <li class="page-item">
+          <a class="page-link"
+             href="../board/list?page=1" aria-label="Next">
+            <i class="bi bi-chevron-double-left"></i>
+          </a>
+        </li>
       <li class="page-item">
         <a class="page-link" href="../board/list?page=${paginationStart-paginationPerPage}" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
+          <i class="bi bi-chevron-left"></i>
         </a>
       </li>
+      </c:if>
       <c:forEach begin="${paginationStart}" end="${paginationEnd}" step="1" var="page">
         <c:choose>
           <c:when test="${param.page ne page}">
@@ -111,13 +127,21 @@
           </c:otherwise>
         </c:choose>
       </c:forEach>
-
+      <c:if test="${totalPagination != paginationEnd}">
       <li class="page-item">
         <a class="page-link"
            href="../board/list?page=${paginationStart+paginationPerPage}" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
+          <i class="bi bi-chevron-right"></i>
         </a>
       </li>
+      <li class="page-item">
+        <a class="page-link"
+           href="../board/list?page=${totalPagination}" aria-label="Next">
+          <i class="bi bi-chevron-double-right"></i>
+        </a>
+      </li>
+
+      </c:if>
     </ul>
   </nav>
   <div class="mt-5">
