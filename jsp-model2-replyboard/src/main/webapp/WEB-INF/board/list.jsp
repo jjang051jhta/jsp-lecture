@@ -78,6 +78,39 @@
       </c:forEach>
     </tbody>
   </table>
+  <nav aria-label="Page navigation example" class="mt-5 mb-5">
+    <ul class="pagination d-flex justify-content-center">
+      <li class="page-item">
+        <a class="page-link" href="" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <c:forEach begin="1" end="${totalPage}" step="1" var="page">
+        <c:choose>
+          <c:when test="${param.page ne page}">
+            <li class="page-item">
+              <a class="page-link" href="../board/list?page=${page}">
+                  ${page}
+              </a>
+            </li>
+          </c:when>
+          <c:otherwise>
+            <li class="page-item active">
+              <span class="page-link">
+                  ${page}
+              </span>
+            </li>
+          </c:otherwise>
+        </c:choose>
+      </c:forEach>
+
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
   <div class="mt-5">
     <a href="../board/write" class="btn btn-primary">WRITE</a>
   </div>
