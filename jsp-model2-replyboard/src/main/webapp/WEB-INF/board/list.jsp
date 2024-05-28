@@ -103,21 +103,34 @@
       </c:if>
       <c:forEach begin="${paginationStart}" end="${paginationEnd}" step="1" var="page">
         <c:choose>
-          <c:when test="${param.page ne page}">
-            <li class="page-item">
-              <a class="page-link" href="../board/list?page=${page}">
-                  ${page}
-              </a>
+          <c:when test="${empty param.page && page == 1}">
+            <li class="page-item active">
+                  <span class="page-link" href="../board/list?page=${page}">
+                      ${page}
+                  </span>
             </li>
           </c:when>
           <c:otherwise>
-            <li class="page-item active">
-              <span class="page-link">
-                  ${page}
-              </span>
-            </li>
+            <c:choose>
+              <c:when test="${param.page ne page}">
+                <li class="page-item">
+                  <a class="page-link" href="../board/list?page=${page}">
+                      ${page}
+                  </a>
+                </li>
+              </c:when>
+              <c:otherwise>
+
+                <li class="page-item active">
+                  <span class="page-link" href="../board/list?page=${page}">
+                      ${page}
+                  </span>
+                </li>
+              </c:otherwise>
+            </c:choose>
           </c:otherwise>
         </c:choose>
+
       </c:forEach>
       <c:if test="${totalPagination != paginationEnd}">
       <li class="page-item">
