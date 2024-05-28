@@ -145,6 +145,7 @@ public class BoardDao extends JDBCConnectionPool {
                         .restep(rs.getInt("restep"))
                         .hit(rs.getInt("hit"))
                         .regDate(rs.getString("regdate"))
+                        .available(rs.getInt("available"))
                         .build();
             }
         } catch (SQLException e) {
@@ -227,5 +228,49 @@ public class BoardDao extends JDBCConnectionPool {
             this.close();
         }
         return result;
+    }
+
+    public List<BoardDto> searchBoard(String search, String searchWord) {
+        List<BoardDto> searchBoardList =  null;
+        String sql = "";
+        //1 삭제된 글은 검색되면 안됨...
+        //2 페이징 처리
+        //3 all 처리
+        try {
+            if(search.equals("subject")) {
+                sql =  "SELECT * FROM board WHERE subject like '%'||?||'%'";
+            } else if(search.equals("content")) {
+                sql =  "SELECT * FROM board WHERE content like '%'||?||'%'";
+            } else if(search.equals("username")) {
+                sql =  "SELECT * FROM board WHERE username like '%'||?||'%'";
+            }
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,searchWord);
+            rs = pstmt.executeQuery();
+            searchBoardList = new ArrayList<>();
+            while(rs.next()) {
+                BoardDto boardDto =
+                BoardDto.builder()
+                        .no(rs.getInt("no"))
+                        .subject(rs.getString("subject"))
+                        .content(rs.getString("content"))
+                        .userID(rs.getString("userid"))
+                        .userName(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .regroup(rs.getInt("regroup"))
+                        .relevel(rs.getInt("relevel"))
+                        .restep(rs.getInt("restep"))
+                        .hit(rs.getInt("hit"))
+                        .regDate(rs.getString("regdate"))
+                        .available(rs.getInt("available"))
+                        .build();
+                searchBoardList.add(boardDto);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return searchBoardList;
     }
 }

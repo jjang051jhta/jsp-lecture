@@ -96,7 +96,7 @@
           </a>
         </li>
       <li class="page-item">
-        <a class="page-link" href="../board/list?page=${paginationStart-paginationPerPage}" aria-label="Previous">
+        <a class="page-link" href="../board/list?page=${paginationStart-1}" aria-label="Previous">
           <i class="bi bi-chevron-left"></i>
         </a>
       </li>
@@ -110,14 +110,6 @@
               </a>
             </li>
           </c:when>
-          <%--<c:when test="${param.page == null}">
-            <li class="page-item active">
-              <a class="page-link" href="../board/list?page=${page}">
-                  ${page}
-              </a>
-            </li>
-          </c:when>--%>
-
           <c:otherwise>
             <li class="page-item active">
               <span class="page-link">
@@ -140,10 +132,27 @@
           <i class="bi bi-chevron-double-right"></i>
         </a>
       </li>
-
       </c:if>
     </ul>
   </nav>
+  <form action="../board/search">
+    <div class="row g-3 align-items-center">
+      <div class="col-2">
+        <select class="form-select" aria-label="Default select example" name="search">
+          <option selected value="subject">제목</option>
+          <option value="username">글쓴이</option>
+          <option value="content">내용</option>
+          <option value="all">제목 + 내용</option>
+        </select>
+      </div>
+      <div class="col-7">
+        <input type="text" name="searchWord" class="form-control">
+      </div>
+      <div class="col-3">
+        <button class="btn btn-primary">SEARCH</button>
+      </div>
+    </div>
+  </form>
   <div class="mt-5">
     <a href="../board/write" class="btn btn-primary">WRITE</a>
   </div>
