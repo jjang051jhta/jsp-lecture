@@ -16,20 +16,22 @@ import java.util.List;
 public class ListBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String search = req.getParameter("search");
+        String searchWord = req.getParameter("searchWord");
+
+        int total=0;
         BoardDao totalBoardDao = new BoardDao();
-        int total = totalBoardDao.getTotal(); //전체 갯수
+        if(search==null) {
+            total = totalBoardDao.getTotal(); //검색 아닐때 전체 갯수
+        } else {
+            total = totalBoardDao.getTotal(search,searchWord); // 검색있을때 전체 갯수
+        }
+
         int listPerPage = 10;                 //한번에 보여질 게시물 수
         int paginationPerPage = 5;            //한번에 보여질 페이지네이션 수
         int totalPagination = (int)Math.ceil((double)total / listPerPage);  //total / listPerPage  13
 
-        System.out.println("total===="+total);
-        System.out.println("listPerPage===="+listPerPage);
-        System.out.println("paginationPerPage===="+paginationPerPage);
-        System.out.println("totalPagination===="+totalPagination);
 
-        //1,2,3,4,5   ===   1 ~  5
-        //6,7,8,9,10  ===   6 ~ 10
-        //11,12,13    ===  11 ~ 13
 
         int start = 1;
         int paginationStart = 1;
@@ -44,19 +46,25 @@ public class ListBoard extends HttpServlet {
             paginationEnd = totalPagination;
         }
 
-        System.out.println("paginationStart=="+paginationStart);
-        System.out.println("paginationEnd=="+paginationEnd);
 
 
         BoardDao boardDao = new BoardDao();
-        //1~10, 11~20
-        List<BoardDto> boardList =
-                boardDao.getPageList(listPerPage*(start-1)+1,listPerPage*start);
+        List<BoardDto> boardList = null;
+        if(search==null) {
+            //1~10, 11~20
+            boardList =
+                    boardDao.getPageList(listPerPage * (start - 1) + 1, listPerPage * start);
+        } else {
+            boardList =
+                    boardDao.searchBoard(search,searchWord,listPerPage * (start - 1) + 1, listPerPage * start);
+        }
         req.setAttribute("boardList",boardList);
         req.setAttribute("totalPagination",totalPagination);
         req.setAttribute("paginationStart",paginationStart);
         req.setAttribute("paginationEnd",paginationEnd);
         req.setAttribute("paginationPerPage",paginationPerPage);
+        req.setAttribute("search",search);
+        req.setAttribute("searchWord",searchWord);
 
 
 

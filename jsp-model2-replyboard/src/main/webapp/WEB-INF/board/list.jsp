@@ -78,6 +78,17 @@
       </c:forEach>
     </tbody>
   </table>
+  <%--pagination--%>
+  <c:choose>
+    <c:when test="${empty search}">
+      <c:set var="link"
+      value=""></c:set>
+    </c:when>
+    <c:otherwise>
+      <c:set var="link"
+value="&search=${search}&searchWord=${searchWord}"></c:set>
+    </c:otherwise>
+  </c:choose>
   <nav aria-label="Page navigation example" class="mt-5 mb-5">
     <div class="d-flex justify-content-center mb-5">
       <span>paginationStart==${paginationStart} / </span>
@@ -105,7 +116,7 @@
         <c:choose>
           <c:when test="${empty param.page && page == 1}">
             <li class="page-item active">
-                  <span class="page-link" href="../board/list?page=${page}">
+                  <span class="page-link" href="../board/list?page=${page}${link}">
                       ${page}
                   </span>
             </li>
@@ -114,7 +125,7 @@
             <c:choose>
               <c:when test="${param.page ne page}">
                 <li class="page-item">
-                  <a class="page-link" href="../board/list?page=${page}">
+                  <a class="page-link" href="../board/list?page=${page}${link}">
                       ${page}
                   </a>
                 </li>
@@ -122,7 +133,7 @@
               <c:otherwise>
 
                 <li class="page-item active">
-                  <span class="page-link" href="../board/list?page=${page}">
+                  <span class="page-link" href="../board/list?page=${page}${link}">
                       ${page}
                   </span>
                 </li>
@@ -148,7 +159,7 @@
       </c:if>
     </ul>
   </nav>
-  <form action="../board/search">
+  <form action="../board/list">
     <div class="row g-3 align-items-center">
       <div class="col-2">
         <select class="form-select" aria-label="Default select example" name="search">
