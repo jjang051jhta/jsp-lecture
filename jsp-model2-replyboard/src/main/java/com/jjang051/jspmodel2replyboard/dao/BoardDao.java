@@ -340,8 +340,7 @@ public class BoardDao extends JDBCConnectionPool {
         String sql = "SELECT * FROM "+
                 "(SELECT rownum AS num, b01.* from "+
                         "(SELECT * FROM board "+
-                                "ORDER BY regroup DESC, relevel asc) b01 " +
-                                    "WHERE available = 1)" +
+                                "ORDER BY regroup DESC, relevel asc) b01) " +
         "WHERE num = ?";
         try {
             pstmt = conn.prepareStatement(sql);

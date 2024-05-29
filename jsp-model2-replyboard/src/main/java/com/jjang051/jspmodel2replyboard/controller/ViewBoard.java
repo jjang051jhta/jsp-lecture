@@ -5,6 +5,7 @@ import com.jjang051.jspmodel2replyboard.dto.BoardDto;
 import com.jjang051.jspmodel2replyboard.utils.ScriptWriter;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,10 @@ public class ViewBoard extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int no = Integer.parseInt(req.getParameter("no"));
         int num = Integer.parseInt(req.getParameter("num"));
+        System.out.println("num==="+num);
+        System.out.println("num+1==="+(num+1));
+        System.out.println("num-1==="+(num-1));
+
 
         BoardDao boardDao = new BoardDao();
         BoardDto boardDto = boardDao.getBoard(no);
