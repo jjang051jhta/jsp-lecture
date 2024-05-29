@@ -81,12 +81,10 @@
   <%--pagination--%>
   <c:choose>
     <c:when test="${empty search}">
-      <c:set var="link"
-      value=""></c:set>
+      <c:set var="link" value=""></c:set>
     </c:when>
     <c:otherwise>
-      <c:set var="link"
-value="&search=${search}&searchWord=${searchWord}"></c:set>
+      <c:set var="link" value="&search=${search}&searchWord=${searchWord}"></c:set>
     </c:otherwise>
   </c:choose>
   <nav aria-label="Page navigation example" class="mt-5 mb-5">
@@ -102,15 +100,15 @@ value="&search=${search}&searchWord=${searchWord}"></c:set>
       <c:if test="${paginationStart!=1}">
         <li class="page-item">
           <a class="page-link"
-             href="../board/list?page=1" aria-label="Next">
+             href="../board/list?page=1${link}" aria-label="Next">
             <i class="bi bi-chevron-double-left"></i>
           </a>
         </li>
-      <li class="page-item">
-        <a class="page-link" href="../board/list?page=${paginationStart-1}" aria-label="Previous">
-          <i class="bi bi-chevron-left"></i>
-        </a>
-      </li>
+        <li class="page-item">
+          <a class="page-link" href="../board/list?page=${paginationStart-1}${link}" aria-label="Previous">
+            <i class="bi bi-chevron-left"></i>
+          </a>
+        </li>
       </c:if>
       <c:forEach begin="${paginationStart}" end="${paginationEnd}" step="1" var="page">
         <c:choose>
@@ -146,13 +144,13 @@ value="&search=${search}&searchWord=${searchWord}"></c:set>
       <c:if test="${totalPagination != paginationEnd}">
       <li class="page-item">
         <a class="page-link"
-           href="../board/list?page=${paginationStart+paginationPerPage}" aria-label="Next">
+           href="../board/list?page=${paginationStart+paginationPerPage}${link}" aria-label="Next">
           <i class="bi bi-chevron-right"></i>
         </a>
       </li>
       <li class="page-item">
         <a class="page-link"
-           href="../board/list?page=${totalPagination}" aria-label="Next">
+           href="../board/list?page=${totalPagination}${link}" aria-label="Next">
           <i class="bi bi-chevron-double-right"></i>
         </a>
       </li>
@@ -163,14 +161,14 @@ value="&search=${search}&searchWord=${searchWord}"></c:set>
     <div class="row g-3 align-items-center">
       <div class="col-2">
         <select class="form-select" aria-label="Default select example" name="search">
-          <option selected value="subject">제목</option>
-          <option value="username">글쓴이</option>
-          <option value="content">내용</option>
-          <option value="all">제목 + 내용</option>
+          <option value="subject"  ${search eq "subject"?"selected":""}>제목</option>
+          <option value="username" ${search eq "username"?"selected":""}>글쓴이</option>
+          <option value="content"  ${search eq "content"?"selected":""}>내용</option>
+          <option value="all"      ${search eq "all"?"selected":""}>제목 + 내용</option>
         </select>
       </div>
       <div class="col-7">
-        <input type="text" name="searchWord" class="form-control">
+        <input type="text" name="searchWord" class="form-control" value="${searchWord}">
       </div>
       <div class="col-3">
         <button class="btn btn-primary">SEARCH</button>

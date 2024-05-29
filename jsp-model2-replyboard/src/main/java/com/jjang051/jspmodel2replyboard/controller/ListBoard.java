@@ -28,7 +28,7 @@ public class ListBoard extends HttpServlet {
         }
 
         int listPerPage = 10;                 //한번에 보여질 게시물 수
-        int paginationPerPage = 5;            //한번에 보여질 페이지네이션 수
+        int paginationPerPage = 3;            //한번에 보여질 페이지네이션 수
         int totalPagination = (int)Math.ceil((double)total / listPerPage);  //total / listPerPage  13
 
 
