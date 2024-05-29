@@ -8,7 +8,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ include file="../include/header.jsp" %>
 <div class="container">
-  <h2 class="mt-5 mb-5">글 목록</h2>
+  <h2 class="mt-5 mb-5">글 목록111</h2>
   <table class="table table-striped">
     <colgroup>
       <col style="width:80px">
@@ -42,13 +42,13 @@
             <c:when test="${boardDto.available > 0}">
               <c:choose>
                 <c:when test="${boardDto.restep > 1}">
-                  <a href="../board/view?no=${boardDto.no}"
+                  <a href="../board/view?no=${boardDto.no}&num=${boardDto.num}"
                      class="step step${boardDto.restep}">
                     <i class="bi bi-arrow-return-right"></i>${boardDto.subject}
                   </a>
                 </c:when>
                 <c:otherwise>
-                  <a href="../board/view?no=${boardDto.no}">
+                  <a href="../board/view?no=${boardDto.no}&num=${boardDto.num}">
                     ${boardDto.subject}
                   </a>
                 </c:otherwise>
@@ -93,8 +93,6 @@
       <span>paginationEnd==${paginationEnd} / </span>
       <span>paginationPerPage==${paginationPerPage} / </span>
       <span>totalPagination==${totalPagination}</span>
-
-
     </div>
     <ul class="pagination d-flex justify-content-center">
       <c:if test="${paginationStart!=1}">

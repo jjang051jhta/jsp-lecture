@@ -38,6 +38,16 @@
              </tr>
         </tbody>
     </table>
+    <div class="mt-5 mb-5">
+        <div class="row">
+            <span class="col-2">이전글</span>
+            <a href="../board/view?no=${prevBoardDto.no}&num=${prevBoardDto.num}" class="col-10">${prevBoardDto.subject}</a>
+        </div>
+        <div class="row">
+            <span class="col-2">다음글</span>
+            <a href="" class="col-10">다음글을 보여줍니다.</a>
+        </div>
+    </div>
     <div class="mt-5">
         <a href="../board/write" class="btn btn-primary">WRITE</a>
         <a href="../board/reply?regroup=${boardDto.regroup}&relevel=${boardDto.relevel}&restep=${boardDto.restep}" class="btn btn-primary">REPLY</a>

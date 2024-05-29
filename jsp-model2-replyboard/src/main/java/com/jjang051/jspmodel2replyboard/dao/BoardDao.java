@@ -61,6 +61,7 @@ public class BoardDao extends JDBCConnectionPool {
             while(rs.next()) {
                 BoardDto boardDto =
                 BoardDto.builder()
+                        .num(rs.getInt("num"))
                         .no(rs.getInt("no"))
                         .subject(rs.getString("subject"))
                         .content(rs.getString("content"))
@@ -100,6 +101,7 @@ public class BoardDao extends JDBCConnectionPool {
             while(rs.next()) {
                 BoardDto boardDto =
                         BoardDto.builder()
+                                .num(rs.getInt("num"))
                                 .no(rs.getInt("no"))
                                 .subject(rs.getString("subject"))
                                 .content(rs.getString("content"))
@@ -126,7 +128,11 @@ public class BoardDao extends JDBCConnectionPool {
 
     public BoardDto getBoard(int no) {
         BoardDto boardDto = null;
-        String sql = "select * from board where no = ?";
+        String sql = "SELECT * FROM " +
+                "(SELECT rownum AS num, b01.* from " +
+                " (SELECT * FROM board " +
+                "    ORDER BY regroup DESC, relevel asc) b01) "+
+                " where no = ?";
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,no);
@@ -134,6 +140,7 @@ public class BoardDao extends JDBCConnectionPool {
             if(rs.next()) {
                 boardDto =
                 BoardDto.builder()
+                        .num(rs.getInt("num"))
                         .no(rs.getInt("no"))
                         .subject(rs.getString("subject"))
                         .content(rs.getString("content"))
@@ -271,6 +278,7 @@ public class BoardDao extends JDBCConnectionPool {
             while(rs.next()) {
                 BoardDto boardDto =
                 BoardDto.builder()
+                        .num(rs.getInt("num"))
                         .no(rs.getInt("no"))
                         .subject(rs.getString("subject"))
                         .content(rs.getString("content"))
@@ -326,4 +334,44 @@ public class BoardDao extends JDBCConnectionPool {
         }
         return result;
     }
+
+    public BoardDto getPrevSelect(int num) {
+        BoardDto boardDto = null;
+        String sql = "SELECT * FROM "+
+                "(SELECT rownum AS num, b01.* from "+
+                        "(SELECT * FROM board "+
+                                "ORDER BY regroup DESC, relevel asc) b01) "+
+        "WHERE num = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,num);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                boardDto =
+                BoardDto.builder()
+                        .num(rs.getInt("num"))
+                        .no(rs.getInt("no"))
+                        .subject(rs.getString("subject"))
+                        .content(rs.getString("content"))
+                        .userID(rs.getString("userid"))
+                        .userName(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .regroup(rs.getInt("regroup"))
+                        .relevel(rs.getInt("relevel"))
+                        .restep(rs.getInt("restep"))
+                        .hit(rs.getInt("hit"))
+                        .regDate(rs.getString("regdate"))
+                        .available(rs.getInt("available"))
+                        .build();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+
+        return boardDto;
+    }
+
+
 }

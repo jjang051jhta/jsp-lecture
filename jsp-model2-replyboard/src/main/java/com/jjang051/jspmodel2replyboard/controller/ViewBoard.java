@@ -17,10 +17,17 @@ public class ViewBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int no = Integer.parseInt(req.getParameter("no"));
+        int num = Integer.parseInt(req.getParameter("num"));
+
         BoardDao boardDao = new BoardDao();
         BoardDto boardDto = boardDao.getBoard(no);
         if(boardDto!=null) {
+
+            BoardDao prevBoardDao = new BoardDao();
+            BoardDto prevBoardDto = prevBoardDao.getPrevSelect(num - 1);
             req.setAttribute("boardDto", boardDto);
+            req.setAttribute("prevBoardDto", prevBoardDto);
+
             RequestDispatcher dispatcher =
                     req.getRequestDispatcher("/WEB-INF/board/view.jsp");
             dispatcher.forward(req, resp);

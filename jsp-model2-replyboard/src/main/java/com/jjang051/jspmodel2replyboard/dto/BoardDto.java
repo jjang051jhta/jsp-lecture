@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class BoardDto {
+    private int num;
     private int no;
     private String userID;
     private String userName;
