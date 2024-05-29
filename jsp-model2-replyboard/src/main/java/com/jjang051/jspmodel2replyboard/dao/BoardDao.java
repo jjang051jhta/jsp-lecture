@@ -335,12 +335,13 @@ public class BoardDao extends JDBCConnectionPool {
         return result;
     }
 
-    public BoardDto getPrevSelect(int num) {
+    public BoardDto getPrevNextSelect(int num) {
         BoardDto boardDto = null;
         String sql = "SELECT * FROM "+
                 "(SELECT rownum AS num, b01.* from "+
                         "(SELECT * FROM board "+
-                                "ORDER BY regroup DESC, relevel asc) b01) "+
+                                "ORDER BY regroup DESC, relevel asc) b01 " +
+                                    "WHERE available = 1)" +
         "WHERE num = ?";
         try {
             pstmt = conn.prepareStatement(sql);

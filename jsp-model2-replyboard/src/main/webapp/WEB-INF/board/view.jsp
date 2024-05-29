@@ -45,7 +45,7 @@
         </div>
         <div class="row">
             <span class="col-2">다음글</span>
-            <a href="" class="col-10">다음글을 보여줍니다.</a>
+            <a href="../board/view?no=${nextBoardDto.no}&num=${nextBoardDto.num}" class="col-10">${nextBoardDto.subject}</a>
         </div>
     </div>
     <div class="mt-5">

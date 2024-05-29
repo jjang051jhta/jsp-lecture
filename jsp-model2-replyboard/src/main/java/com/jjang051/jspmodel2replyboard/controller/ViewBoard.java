@@ -22,11 +22,16 @@ public class ViewBoard extends HttpServlet {
         BoardDao boardDao = new BoardDao();
         BoardDto boardDto = boardDao.getBoard(no);
         if(boardDto!=null) {
-
+            //찾게되면 후사하겠습니다.
             BoardDao prevBoardDao = new BoardDao();
-            BoardDto prevBoardDto = prevBoardDao.getPrevSelect(num - 1);
+            BoardDto prevBoardDto = prevBoardDao.getPrevNextSelect(num - 1);
+            BoardDao nextBoardDao = new BoardDao();
+            BoardDto nextBoardDto = nextBoardDao.getPrevNextSelect(num + 1);
+
             req.setAttribute("boardDto", boardDto);
             req.setAttribute("prevBoardDto", prevBoardDto);
+            req.setAttribute("nextBoardDto", nextBoardDto);
+
 
             RequestDispatcher dispatcher =
                     req.getRequestDispatcher("/WEB-INF/board/view.jsp");
