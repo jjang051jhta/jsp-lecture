@@ -230,22 +230,42 @@ public class BoardDao extends JDBCConnectionPool {
         return result;
     }
 
-    public List<BoardDto> searchBoard(String search, String searchWord) {
+    public List<BoardDto> searchBoard(String search, String searchWord,int start, int end) {
         List<BoardDto> searchBoardList =  null;
         String sql = "";
         //1 삭제된 글은 검색되면 안됨...
         //2 페이징 처리
         //3 all 처리
+        String searchSql = "";
         try {
             if(search.equals("subject")) {
-                sql =  "SELECT * FROM board WHERE subject like '%'||?||'%'";
+                searchSql =  "subject like '%'||?||'%'";
+
             } else if(search.equals("content")) {
-                sql =  "SELECT * FROM board WHERE content like '%'||?||'%'";
+                searchSql=  "content like '%'||?||'%'";
             } else if(search.equals("username")) {
-                sql =  "SELECT * FROM board WHERE username like '%'||?||'%'";
+                searchSql =  "username like '%'||?||'%'";
+            } else {
+                searchSql =  "subject like '%'||?||'%' or content like '%'||?||'%'";
             }
+            sql = "SELECT * FROM "+
+                    "(SELECT rownum AS num, b01.* from "+
+                            "(SELECT * FROM board "+
+                                    "WHERE available = 1 and "+
+                                    searchSql+
+            "ORDER BY regroup DESC, relevel asc) b01) "+
+            "WHERE num BETWEEN ? AND ?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,searchWord);
+            if(!search.equals("all")) {
+                pstmt.setString(1, searchWord);
+                pstmt.setInt(2, start);
+                pstmt.setInt(3, end);
+            } else {
+                pstmt.setString(1, searchWord);
+                pstmt.setString(2, searchWord);
+                pstmt.setInt(3, start);
+                pstmt.setInt(4, end);
+            }
             rs = pstmt.executeQuery();
             searchBoardList = new ArrayList<>();
             while(rs.next()) {
@@ -272,5 +292,38 @@ public class BoardDao extends JDBCConnectionPool {
             this.close();
         }
         return searchBoardList;
+    }
+    public int getTotal(String search, String searchWord) {
+        //125
+        int result = 0;
+        String sql="";
+        if(search.equals("subject")) {
+            sql = "select count(*) as total from board where subject like '%'||?||'%'";
+        } else if(search.equals("content")) {
+            sql = "select count(*) as total from board where content like '%'||?||'%'";
+        } else if(search.equals("username")) {
+            sql = "select count(*) as total from board where username like '%'||?||'%'";
+        } else {
+            sql = "select count(*) as total from board where subject like '%'||?||'%' or content like '%'||?||'%'";
+        }
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            if(!search.equals("all")) {
+                pstmt.setString(1, searchWord);
+            } else {
+                pstmt.setString(1, searchWord);
+                pstmt.setString(2, searchWord);
+            }
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                result = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.close();
+        }
+        return result;
     }
 }
