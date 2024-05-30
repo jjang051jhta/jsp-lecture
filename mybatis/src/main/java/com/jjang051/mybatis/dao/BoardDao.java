@@ -55,4 +55,20 @@ public class BoardDao {
         sqlSession.close();
         return boardList;
     }
+
+    public int getMaxRegroup() {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.selectOne("getMaxRegroup");
+        sqlSession.close();
+        return result;
+    }
+
+    public int writeBoard(BoardDto boardDto) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.insert("writeBoard",boardDto);
+        sqlSession.close();
+        return result;
+    }
 }

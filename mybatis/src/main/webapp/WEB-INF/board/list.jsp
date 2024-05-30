@@ -39,7 +39,7 @@
                 </c:forEach>
             </tbody>
         </table>
-        <form action="../board/search">
+        <form action="../board/search" class="mt-5 mb-5">
             <div class="row g-3 align-items-center">
                 <div class="col-2">
                     <select class="form-select" aria-label="Default select example" name="search">
@@ -57,6 +57,9 @@
                 </div>
             </div>
         </form>
+        <div class="mt-5 mb-5">
+            <a href="../board/write" class="btn btn-primary">WRITE</a>
+        </div>
     </div>
 
 <%@ include file="../include/footer.jsp" %>

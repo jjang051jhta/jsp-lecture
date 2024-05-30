@@ -8,8 +8,6 @@
         <typeAlias alias="BoardDto"  type="com.jjang051.mybatis.dto.BoardDto" />
         <typeAlias alias="PageDto"   type="com.jjang051.mybatis.dto.PageDto" />
         <typeAlias alias="SearchDto" type="com.jjang051.mybatis.dto.SearchDto" />
-
-
     </typeAliases>
     <environments default="development">
         <environment id="development">
