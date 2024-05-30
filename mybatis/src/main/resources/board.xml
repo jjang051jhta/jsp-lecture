@@ -13,6 +13,30 @@
             (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
         ) WHERE NUM BETWEEN #{start} AND #{end}
     </select>
+    <select id="getBoardTotal" resultType="int">
+        select count(*) as total from board
+    </select>
+    <delete id="deleteBoard" parameterType="BoardDto">
+        delete from board where no = #{no} and password = #{password}
+    </delete>
+    <select id="searchBoard" resultType="BoardDto" parameterType="SearchDto" >
+        select * from board where
+        <choose>
+            <when test="search=='subject'">
+                subject like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='content'">
+                content like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='username'">
+                username like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='all'">
+                (subject like '%'||#{searchWord}||'%') or
+                (content like '%'||#{searchWord}||'%')
+            </when>
+        </choose>
+    </select>
     <!--<select id="getBoardList" resultType="BoardDto">
         SELECT * FROM
             (SELECT rownum AS num, b01.* from

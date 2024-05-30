@@ -19,17 +19,26 @@ import java.util.Map;
 public class ListBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int page = Integer.parseInt(req.getParameter("page"));
+        int start = 1;
+        int end = 10;
+        int paginationStart = 1;
+        int paginationEnd = 10;
+        if(req.getParameter("page")!=null) {
+            start = (Integer.parseInt(req.getParameter("page")) - 1)*10+1;
+        }
+        end = start+10;
         /*Map<String,Integer> pageMap = new HashMap<>();
         pageMap.put("start",11);
         pageMap.put("end",20);*/
         PageDto pageDto = new PageDto();
-        pageDto.setStart(1);
-        pageDto.setEnd(10);
+        pageDto.setStart(start);
+        pageDto.setEnd(end);
         BoardDao boardDao = new BoardDao();
-        //List<BoardDto> boardList = boardDao.getBoardList(pageMap);
+        BoardDao boardTotalDao = new BoardDao();
+        int total = boardTotalDao.getBoardTotal();
         List<BoardDto> boardList = boardDao.getBoardList(pageDto);
         req.setAttribute("boardList",boardList);
+        req.setAttribute("total",total);
         RequestDispatcher dispatcher =
         req.getRequestDispatcher("/WEB-INF/board/list.jsp");
         dispatcher.forward(req,resp);

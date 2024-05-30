@@ -14,9 +14,12 @@ import java.io.IOException;
 public class ViewBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int no = 0;
+        if(req.getParameter("no")!=null){
+            no = Integer.parseInt(req.getParameter("no"));
+        }
         BoardDao boardDao = new BoardDao();
-        BoardDto boardDto = boardDao.getBoard();
-        System.out.println(boardDto.getSubject());
+        BoardDto boardDto = boardDao.getBoard(no);
         req.setAttribute("boardDto",boardDto);
         req.getRequestDispatcher("/WEB-INF/board/view.jsp")
            .forward(req,resp);
