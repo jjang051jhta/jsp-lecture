@@ -40,7 +40,7 @@
         </tbody>
     </table>
     <div class="mt-5 mb-5">
-        <a href="../board/reply" class="btn btn-danger">REPLY</a>
+        <a href="../board/reply?regroup=${boardDto.regroup}&relevel=${boardDto.relevel}&restep=${boardDto.restep}" class="btn btn-danger">REPLY</a>
         <a href="../board/delete?no=${boardDto.no}" class="btn btn-danger">DELETE</a>
     </div>
 </div>

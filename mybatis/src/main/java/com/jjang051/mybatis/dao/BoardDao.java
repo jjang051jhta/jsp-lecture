@@ -71,4 +71,26 @@ public class BoardDao {
         sqlSession.close();
         return result;
     }
+    public int updateRelevel(BoardDto boardDto) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.update("updateRelevel",boardDto);
+        sqlSession.close();
+        return result;
+    }
+    public int replyBoard(BoardDto boardDto) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.insert("replyBoard",boardDto);
+        sqlSession.close();
+        return result;
+    }
+
+    public int deleteAllBoard(int[] noArray) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.delete("deleteAllBoard",noArray);
+        sqlSession.close();
+        return result;
+    }
 }

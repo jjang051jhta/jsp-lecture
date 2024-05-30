@@ -46,6 +46,25 @@
          #{content},#{userID},#{userName},#{password},
         #{regroup},1,1,1,sysdate,1)
     </insert>
+    <update id="updateRelevel" parameterType="BoardDto">
+        update board set
+            relevel = relevel + 1
+            where regroup = #{regroup} and relevel > #{relevel}
+    </update>
+    <insert id="replyBoard" parameterType="BoardDto">
+        insert into board values
+        (board_seq.nextval,#{subject},
+        #{content},#{userID},#{userName},#{password},
+        #{regroup},#{relevel},#{restep},1,sysdate,1)
+    </insert>
+    <delete id="deleteAllBoard">
+        <!--DELETE FROM board WHERE NO IN (407,406)-->
+        DELETE FROM board WHERE NO IN
+        <foreach collection="array" item="item" index="i"
+                 open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
     <!--<select id="getBoardList" resultType="BoardDto">
         SELECT * FROM
             (SELECT rownum AS num, b01.* from

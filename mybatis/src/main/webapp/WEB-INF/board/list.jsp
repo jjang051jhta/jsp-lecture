@@ -9,36 +9,43 @@
 <%@ include file="../include/header.jsp" %>
     <div class="container">
         <h2 class="mt-5 mb-5">LIST</h2>
-        <table class="table table-striped">
-            <colgroup>
-                <col style="width:80px">
-                <col>
-                <col style="width:150px">
-                <col style="width:80px">
-                <col style="width:250px">
-            </colgroup>
-            <thead>
-            <tr>
-                <th>NO</th>
-                <th>SUBJECT</th>
-                <th>WRITER</th>
-                <th>HIT</th>
-                <th>DATE</th>
-            </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${boardList}" var="boardDto" varStatus="loop">
+        <form action="../board/delete-all" method="post">
+            <table class="table table-striped">
+                <colgroup>
+                    <col style="width:80px">
+                    <col>
+                    <col style="width:150px">
+                    <col style="width:80px">
+                    <col style="width:250px">
+                </colgroup>
+                <thead>
                 <tr>
-                    <%--<td>${total - (param.page - 1)*10 - loop.index}</td>--%>
-                    <td>${total - boardDto.num + 1}</td>
-                        <td><a href="../board/view?no=${boardDto.no}">${boardDto.subject}</a></td>
-                    <td>${boardDto.userName}</td>
-                    <td>${boardDto.hit}</td>
-                    <td>${boardDto.regDate}</td>
+                    <th>NO</th>
+                    <th>SUBJECT</th>
+                    <th>WRITER</th>
+                    <th>HIT</th>
+                    <th>DATE</th>
+                    <td><input type="checkbox" id="check-all"></td>
                 </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach items="${boardList}" var="boardDto" varStatus="loop">
+                    <tr>
+                        <%--<td>${total - (param.page - 1)*10 - loop.index}</td>--%>
+                        <td>${total - boardDto.num + 1}</td>
+                            <td><a href="../board/view?no=${boardDto.no}">${boardDto.subject}</a></td>
+                        <td>${boardDto.userName}</td>
+                        <td>${boardDto.hit}</td>
+                        <td>${boardDto.regDate}</td>
+                        <td><input type="checkbox" name="check" value="${boardDto.no}"></td>
+                    </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <div class="mt-5 mb-5 d-flex justify-content-end">
+                <button class="btn btn-danger">DELETE-ALL</button>
+            </div>
+        </form>
         <form action="../board/search" class="mt-5 mb-5">
             <div class="row g-3 align-items-center">
                 <div class="col-2">
