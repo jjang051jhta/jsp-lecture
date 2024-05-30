@@ -37,7 +37,7 @@
                         <td>${boardDto.userName}</td>
                         <td>${boardDto.hit}</td>
                         <td>${boardDto.regDate}</td>
-                        <td><input type="checkbox" name="check" value="${boardDto.no}"></td>
+                        <td><input type="checkbox" name="check" class="check" value="${boardDto.no}"></td>
                     </tr>
                     </c:forEach>
                 </tbody>
@@ -68,7 +68,24 @@
             <a href="../board/write" class="btn btn-primary">WRITE</a>
         </div>
     </div>
-
+    <script>
+        $("#check-all").on("change", function () {
+            //  속성의 값을 체크할때
+            console.log($(this).prop("checked"));
+            if ($(this).prop("checked")) {
+                $(".check").prop("checked", true);
+            } else {
+                $(".check").prop("checked", false);
+            }
+            /*
+            if($(this).is(":checked")) {
+                $(".check").prop("checked",true);
+            } else {
+                $(".check").prop("checked",false);
+            }
+           */
+        })
+    </script>
 <%@ include file="../include/footer.jsp" %>
 
 

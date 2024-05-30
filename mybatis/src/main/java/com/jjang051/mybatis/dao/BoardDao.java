@@ -90,6 +90,9 @@ public class BoardDao {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.delete("deleteAllBoard",noArray);
+        if(result!=4) {
+            sqlSession.rollback();
+        }
         sqlSession.close();
         return result;
     }
