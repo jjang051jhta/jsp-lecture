@@ -3,8 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jjang051.mybatis">
-    <select id="getBoard" resultType="BoardDto"
-                          parameterType="int">
+    <select id="getBoard" resultType="BoardDto" parameterType="int">
         select * from board where no = #{no}
+        <!-- select * from board where no = ? -->
     </select>
+    <select id="getBoardList" resultType="BoardDto" parameterType="PageDto">
+        SELECT * FROM
+        (SELECT rownum AS num, b01.* from
+            (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
+        ) WHERE NUM BETWEEN #{start} AND #{end}
+    </select>
+    <!--<select id="getBoardList" resultType="BoardDto">
+        SELECT * FROM
+            (SELECT rownum AS num, b01.* from
+                (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
+            ) WHERE NUM <![CDATA[ >= ]]> 1 AND NUM <![CDATA[ <= ]]> 10
+    </select>
+    <select id="getBoardList" resultType="BoardDto">
+        <![CDATA[
+            SELECT * FROM
+                (SELECT rownum AS num, b01.* from
+                    (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
+            ) WHERE NUM  >=  1 AND NUM  <=  10
+        ]]>
+    </select>-->
+
 </mapper>
