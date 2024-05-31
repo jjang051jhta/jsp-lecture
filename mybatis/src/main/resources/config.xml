@@ -8,6 +8,7 @@
         <typeAlias alias="BoardDto"  type="com.jjang051.mybatis.dto.BoardDto" />
         <typeAlias alias="PageDto"   type="com.jjang051.mybatis.dto.PageDto" />
         <typeAlias alias="SearchDto" type="com.jjang051.mybatis.dto.SearchDto" />
+        <typeAlias alias="MemberDto" type="com.jjang051.mybatis.dto.MemberDto" />
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -25,5 +26,6 @@
     </environments>
     <mappers>
         <mapper resource="board.xml"/>
+        <mapper resource="member.xml"/>
     </mappers>
 </configuration>

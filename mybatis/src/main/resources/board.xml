@@ -3,24 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jjang051.mybatis">
-    <select id="getBoard" resultType="BoardDto" parameterType="int">
-        select * from board where no = #{no}
-        <!-- select * from board where no = ? -->
-    </select>
-    <select id="getBoardList" resultType="BoardDto" parameterType="PageDto">
-        SELECT * FROM
-        (SELECT rownum AS num, b01.* from
-            (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
-        ) WHERE NUM BETWEEN #{start} AND #{end}
-    </select>
-    <select id="getBoardTotal" resultType="int">
-        select count(*) as total from board
-    </select>
-    <delete id="deleteBoard" parameterType="BoardDto">
-        delete from board where no = #{no} and password = #{password}
-    </delete>
-    <select id="searchBoard" resultType="BoardDto" parameterType="SearchDto" >
-        select * from board where
+    <sql id="search">
         <choose>
             <when test="search=='subject'">
                 subject like '%'||#{searchWord}||'%'
@@ -36,6 +19,55 @@
                 (content like '%'||#{searchWord}||'%')
             </otherwise>
         </choose>
+    </sql>
+    <select id="getBoard" resultType="BoardDto" parameterType="int">
+        select * from board where no = #{no}
+        <!-- select * from board where no = ? -->
+    </select>
+    <select id="getBoardList" resultType="BoardDto" parameterType="PageDto">
+        SELECT * FROM
+        (SELECT rownum AS num, b01.* from
+            (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
+        ) WHERE NUM BETWEEN #{start} AND #{end}
+    </select>
+    <select id="getBoardTotal" resultType="int">
+        select count(*) as total from board
+    </select>
+    <select id="getSearchBoardTotal" resultType="int" parameterType="SearchDto">
+        SELECT COUNT(*) AS TOTAL FROM BOARD WHERE
+        <include refid="search"></include>
+    </select>
+
+    <delete id="deleteBoard" parameterType="BoardDto">
+        delete from board where no = #{no} and password = #{password}
+    </delete>
+    <select id="searchBoard" resultType="BoardDto" parameterType="SearchDto" >
+        SELECT * FROM
+            (SELECT rownum AS num, b01.* from
+                (SELECT * FROM board
+                    WHERE
+                        <include refid="search"></include>
+                    ORDER BY regroup DESC, relevel asc
+                )
+            b01)
+        WHERE num BETWEEN 1 AND 10
+
+        <!--select * from board where
+        <choose>
+            <when test="search=='subject'">
+                subject like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='content'">
+                content like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='username'">
+                username like '%'||#{searchWord}||'%'
+            </when>
+            <otherwise>
+                (subject like '%'||#{searchWord}||'%') or
+                (content like '%'||#{searchWord}||'%')
+            </otherwise>
+        </choose>-->
     </select>
     <select id="getMaxRegroup" resultType="int">
         select nvl(max(regroup),0) as max from board

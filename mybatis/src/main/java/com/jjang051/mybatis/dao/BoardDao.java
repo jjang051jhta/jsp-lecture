@@ -14,7 +14,7 @@ public class BoardDao {
         BoardDto boardDto = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         boardDto = sqlSession.selectOne("getBoard",no);
-
+        sqlSession.commit();
         sqlSession.close();
         return boardDto;
     }
@@ -22,6 +22,7 @@ public class BoardDao {
         List<BoardDto> boardList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         boardList = sqlSession.selectList("getBoardList", pageMap);
+        sqlSession.commit();
         sqlSession.close();
         return boardList;
     }
@@ -29,6 +30,7 @@ public class BoardDao {
         List<BoardDto> boardList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         boardList = sqlSession.selectList("getBoardList", pageDto);
+        sqlSession.commit();
         sqlSession.close();
         return boardList;
     }
@@ -37,6 +39,7 @@ public class BoardDao {
         int total = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         total = sqlSession.selectOne("getBoardTotal");
+        sqlSession.commit();
         sqlSession.close();
         return total;
     }
@@ -45,6 +48,7 @@ public class BoardDao {
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         int result = sqlSession.delete("deleteBoard",boardDto);
         System.out.println("dao result==="+result);
+        sqlSession.commit();
         sqlSession.close();
         return result;
     }
@@ -52,6 +56,7 @@ public class BoardDao {
         List<BoardDto> boardList = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         boardList = sqlSession.selectList("searchBoard",searchDto);
+        sqlSession.commit();
         sqlSession.close();
         return boardList;
     }
@@ -60,6 +65,7 @@ public class BoardDao {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.selectOne("getMaxRegroup");
+        sqlSession.commit();
         sqlSession.close();
         return result;
     }
@@ -68,6 +74,7 @@ public class BoardDao {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.insert("writeBoard",boardDto);
+        sqlSession.commit();
         sqlSession.close();
         return result;
     }
@@ -75,6 +82,7 @@ public class BoardDao {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.update("updateRelevel",boardDto);
+        sqlSession.commit();
         sqlSession.close();
         return result;
     }
@@ -82,17 +90,31 @@ public class BoardDao {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.insert("replyBoard",boardDto);
+        sqlSession.commit();
         sqlSession.close();
         return result;
     }
 
     public int deleteAllBoard(int[] noArray) {
         int result = 0;
-        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession(false);
         result = sqlSession.delete("deleteAllBoard",noArray);
-        if(result!=4) {
+        if(noArray.length==result) {
+            sqlSession.commit();
+        }else {
             sqlSession.rollback();
         }
+        System.out.println("result==="+result);
+
+
+        sqlSession.close();
+        return result;
+    }
+
+    public int getSearchBoardTotal(SearchDto searchDto) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.selectOne("getSearchBoardTotal",searchDto);
         sqlSession.close();
         return result;
     }

@@ -26,8 +26,10 @@ public class SearchBoard extends HttpServlet {
                         .build();
         BoardDao boardDao = new BoardDao();
         List<BoardDto> boardList = boardDao.searchBoard(searchDto);
-        System.out.println("boardList size==="+boardList.size());
+        int total = boardDao.getSearchBoardTotal(searchDto);
         req.setAttribute("boardList",boardList);
+        req.setAttribute("total",total);
+
         RequestDispatcher dispatcher =
         req.getRequestDispatcher("/WEB-INF/board/search-list.jsp");
         dispatcher.forward(req,resp);
