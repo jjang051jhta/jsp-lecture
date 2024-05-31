@@ -44,3 +44,10 @@
     height: 100px;
     object-fit: contain;
 }
+.profile {
+    border-radius: 100px;
+    width:38px !important;
+    height: 38px;
+    object-fit: cover;
+    overflow: hidden;
+}

@@ -32,18 +32,21 @@
             <li><a href="" class="nav-link px-2">FAQs</a></li>
         </ul>
         <c:choose>
-            <c:when test="${sessionMemberDto eq null}">
+            <c:when test="${sessionID eq null}">
                 <div class="col-md-3 text-end">
                     <a href="../member/login" class="btn btn-outline-primary me-2">Login</a>
                     <a href="../member/insert" class="btn btn-primary">Sign-up</a>
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="col-md-3 text-end">
-                    <a href="../member/info?userID=${sessionMemberDto.userID}" class="btn btn-outline-primary me-2">
-                        ${sessionMemberDto.userName}
-                    </a>
-                    <a href="../member/logout" class="btn btn-primary">LOGOUT</a>
+                <div class="col-md-3 text-end d-flex  align-items-center">
+                    <div class="d-inline-block">
+                        <a href="../member/info?userID=${sessionID}" class="d-block">
+                            <img src="${request.contextPath}/upload/${profile}" class="profile">
+                        </a>
+                        <%--<span>${sessionName}</span>--%>
+                    </div>
+                    <a href="../member/logout" class="btn btn-primary mx-2">LOGOUT</a>
                 </div>
             </c:otherwise>
         </c:choose>

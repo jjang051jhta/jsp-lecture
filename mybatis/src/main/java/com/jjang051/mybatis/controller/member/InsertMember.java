@@ -1,6 +1,7 @@
 package com.jjang051.mybatis.controller.member;
 
 import com.jjang051.mybatis.dao.MemberDao;
+import com.jjang051.mybatis.dto.Grade;
 import com.jjang051.mybatis.dto.MemberDto;
 import com.jjang051.mybatis.utils.ScriptWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Position;
+import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.name.Rename;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -59,6 +62,7 @@ public class InsertMember extends HttpServlet {
             File newFile =
                     new File(serverUploadDir+File.separator+renameProfile);
             Thumbnails.of(oldFile)
+                    //.sourceRegion(Positions.CENTER,100,200)
                     .size(100,200)
                     .toFiles(dir, Rename.NO_CHANGE);
             oldFile.renameTo(newFile);

@@ -22,5 +22,8 @@
     <select id="idCheck" resultType="int">
         SELECT COUNT(*) AS TOTAL FROM MEMBER WHERE USERID = #{value}
     </select>
+    <select id="loginMember" resultType="MemberDto" parameterType="MemberDto">
+        SELECT * FROM MEMBER WHERE USERID = #{userID}
+    </select>
 
 </mapper>

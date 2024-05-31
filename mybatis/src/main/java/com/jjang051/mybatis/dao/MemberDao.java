@@ -22,4 +22,12 @@ public class MemberDao {
         sqlSession.close();
         return result;
     }
+
+    public MemberDto loginMember(MemberDto memberDto) {
+        MemberDto loginMemberDto = null;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        loginMemberDto = sqlSession.selectOne("loginMember",memberDto); // 1,0
+        sqlSession.close();
+        return loginMemberDto;
+    }
 }
