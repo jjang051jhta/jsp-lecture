@@ -14,4 +14,12 @@ public class MemberDao {
         sqlSession.close();
         return result;
     }
+
+    public int idCheck(String userID) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.selectOne("idCheck",userID); // 1,0
+        sqlSession.close();
+        return result;
+    }
 }

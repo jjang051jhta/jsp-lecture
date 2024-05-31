@@ -4,7 +4,7 @@
     <h2 class="mt-5 mb-5">회원가입</h2>
     <%--서버내에 있는 resource에 있는 것들은 사용 가능--%>
 
-    <form action="../member/insert-process" method="post"
+    <form action="../member/insert" method="post"
           enctype="multipart/form-data">
         <div class="mb-3">
             <label for="userID" class="form-label">USER ID</label>
@@ -45,7 +45,7 @@
         </div>
         <div class="mb-3">
             <label for="detail-address" class="form-label">DETAIL ADDRESS</label>
-            <input type="text" class="form-control" id="detail-address" placeholder="detail address" name="detailAddress">
+            <input type="text" class="form-control" id="detail-address" placeholder="detail address" name="addressDetail">
         </div>
         <div class="mb-3">
             <label for="birth" class="form-label">BIRTH</label>

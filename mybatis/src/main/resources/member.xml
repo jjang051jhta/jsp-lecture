@@ -5,7 +5,11 @@
 <mapper namespace="com.jjang051.mybatis">
     <insert id="insertMember" parameterType="MemberDto">
         INSERT INTO MEMBER VALUES(
-            member_seq.nextval,#{userID},#{userPW},#{userEmail},
+            member_seq.nextval,
+            #{userID},
+            #{userPW},
+            #{userName},
+            #{userEmail},
             #{postCode},
             #{address},
             #{addressDetail},
@@ -15,5 +19,8 @@
             #{renameProfile}
         )
     </insert>
+    <select id="idCheck" resultType="int">
+        SELECT COUNT(*) AS TOTAL FROM MEMBER WHERE USERID = #{value}
+    </select>
 
 </mapper>
