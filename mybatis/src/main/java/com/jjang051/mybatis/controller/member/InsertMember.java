@@ -1,7 +1,7 @@
 package com.jjang051.mybatis.controller.member;
 
 import com.jjang051.mybatis.dao.MemberDao;
-import com.jjang051.mybatis.dto.Grade;
+
 import com.jjang051.mybatis.dto.MemberDto;
 import com.jjang051.mybatis.utils.ScriptWriter;
 import jakarta.servlet.ServletException;
