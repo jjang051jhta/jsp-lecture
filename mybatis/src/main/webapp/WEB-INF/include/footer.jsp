@@ -33,6 +33,7 @@
         const modal = new bootstrap.Modal("#modal");
         modal.show();
     </script>
+    <c:remove var="modal" scope="session"/>
 </c:if>
 </body>
 </html>
