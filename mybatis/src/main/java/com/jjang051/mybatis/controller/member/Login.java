@@ -2,6 +2,7 @@ package com.jjang051.mybatis.controller.member;
 
 import com.jjang051.mybatis.dao.MemberDao;
 import com.jjang051.mybatis.dto.MemberDto;
+import com.jjang051.mybatis.dto.ModalDto;
 import com.jjang051.mybatis.utils.ScriptWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @WebServlet("/member/login")
 public class Login extends HttpServlet {
@@ -38,7 +40,13 @@ public class Login extends HttpServlet {
                 session.setAttribute("sessionName",loginMemberDto.getUserName());
                 session.setAttribute("sessionGrade",loginMemberDto.getGrade());
                 session.setAttribute("profile",loginMemberDto.getRenameProfile());
-                ScriptWriter.alertAndNext(resp,"로그인 되었습니다.","../index/index");
+                ModalDto modalDto = new ModalDto("로그인","로그인 되었습니다.","show");
+                //req.setAttribute("modal",modalDto);
+                //String sendMSg = URLEncoder.encode("title=로그인&msg=로그인 되었습니다&isState=show");
+                HttpSession session02 = req.getSession();
+                session02.setAttribute("modal",modalDto);
+                resp.sendRedirect("../index/index");
+                //ScriptWriter.alertAndNext(resp,"로그인 되었습니다.","../index/index");
             } else {
                 ScriptWriter.alertAndBack(resp,"비밀번호 오류");
             }
