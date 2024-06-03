@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jjang051.mybatis">
+    <sql id="search">
+        <choose>
+            <when test="search=='subject'">
+                subject like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='content'">
+                content like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='username'">
+                username like '%'||#{searchWord}||'%'
+            </when>
+            <otherwise>
+                (subject like '%'||#{searchWord}||'%') or
+                (content like '%'||#{searchWord}||'%')
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="getBoard" resultType="BoardDto" parameterType="int">
+        select * from board where no = #{no}
+        <!-- select * from board where no = ? -->
+    </select>
+    <select id="getBoardList" resultType="BoardDto" parameterType="PageDto">
+        SELECT * FROM
+        (SELECT rownum AS num, b01.* from
+            (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
+        ) WHERE NUM BETWEEN #{start} AND #{end}
+    </select>
+    <select id="getBoardTotal" resultType="int">
+        select count(*) as total from board
+    </select>
+    <select id="getSearchBoardTotal" resultType="int" parameterType="SearchDto">
+        SELECT COUNT(*) AS TOTAL FROM BOARD WHERE
+        <include refid="search"></include>
+    </select>
+
+    <delete id="deleteBoard" parameterType="BoardDto">
+        delete from board where no = #{no} and password = #{password}
+    </delete>
+    <select id="searchBoard" resultType="BoardDto" parameterType="SearchDto" >
+        SELECT * FROM
+            (SELECT rownum AS num, b01.* from
+                (SELECT * FROM board
+                    WHERE
+                        <include refid="search"></include>
+                    ORDER BY regroup DESC, relevel asc
+                )
+            b01)
+        WHERE num BETWEEN 1 AND 10
+
+        <!--select * from board where
+        <choose>
+            <when test="search=='subject'">
+                subject like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='content'">
+                content like '%'||#{searchWord}||'%'
+            </when>
+            <when test="search=='username'">
+                username like '%'||#{searchWord}||'%'
+            </when>
+            <otherwise>
+                (subject like '%'||#{searchWord}||'%') or
+                (content like '%'||#{searchWord}||'%')
+            </otherwise>
+        </choose>-->
+    </select>
+    <select id="getMaxRegroup" resultType="int">
+        select nvl(max(regroup),0) as max from board
+    </select>
+    <insert id="writeBoard" parameterType="BoardDto">
+        insert into board values
+        (board_seq.nextval,#{subject},
+         #{content},#{userID},#{userName},#{password},
+        #{regroup},1,1,1,sysdate,1)
+    </insert>
+    <update id="updateRelevel" parameterType="BoardDto">
+        update board set
+            relevel = relevel + 1
+            where regroup = #{regroup} and relevel > #{relevel}
+    </update>
+    <insert id="replyBoard" parameterType="BoardDto">
+        insert into board values
+        (board_seq.nextval,#{subject},
+        #{content},#{userID},#{userName},#{password},
+        #{regroup},#{relevel},#{restep},1,sysdate,1)
+    </insert>
+    <delete id="deleteAllBoard">
+        <!--DELETE FROM board WHERE NO IN (407,406)-->
+        DELETE FROM board WHERE NO IN
+        <foreach collection="array" item="item" index="i"
+                 open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <!--<select id="getBoardList" resultType="BoardDto">
+        SELECT * FROM
+            (SELECT rownum AS num, b01.* from
+                (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
+            ) WHERE NUM <![CDATA[ >= ]]> 1 AND NUM <![CDATA[ <= ]]> 10
+    </select>
+    <select id="getBoardList" resultType="BoardDto">
+        <![CDATA[
+            SELECT * FROM
+                (SELECT rownum AS num, b01.* from
+                    (SELECT * FROM board ORDER BY regroup DESC, relevel asc) b01
+            ) WHERE NUM  >=  1 AND NUM  <=  10
+        ]]>
+    </select>-->
+
+</mapper>

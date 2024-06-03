@@ -36,8 +36,11 @@ public class Login extends HttpServlet {
                 HttpSession session = req.getSession();
                 session.setAttribute("sessionID",loginMemberDto.getUserID());
                 session.setAttribute("sessionName",loginMemberDto.getUserName());
+                session.setAttribute("sessionGrade",loginMemberDto.getGrade());
                 session.setAttribute("profile",loginMemberDto.getRenameProfile());
                 ScriptWriter.alertAndNext(resp,"로그인 되었습니다.","../index/index");
+            } else {
+                ScriptWriter.alertAndBack(resp,"비밀번호 오류");
             }
         }else {
             ScriptWriter.alertAndBack(resp,

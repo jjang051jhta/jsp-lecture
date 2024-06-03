@@ -14,11 +14,11 @@ public class MemberDto {
     private String userID;
     private String userPW;
     private String userName;
-    private String userEmail;
+    private String email;
     private int postCode;
     private String address;
     private String addressDetail;
-    private String grade;
+    private Grade grade;
     private String birth;
     private String originalProfile;
     private String renameProfile;

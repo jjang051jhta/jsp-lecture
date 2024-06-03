@@ -17,6 +17,9 @@
                     <col style="width:150px">
                     <col style="width:80px">
                     <col style="width:250px">
+                    <c:if test="${sessionGrade.label eq 'admin'}">
+                        <col style="width:80px">
+                    </c:if>
                 </colgroup>
                 <thead>
                 <tr>
@@ -25,7 +28,9 @@
                     <th>WRITER</th>
                     <th>HIT</th>
                     <th>DATE</th>
-                    <td><input type="checkbox" id="check-all"></td>
+                    <c:if test="${sessionGrade.label eq 'admin'}">
+                        <td><input type="checkbox" id="check-all"></td>
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,14 +42,18 @@
                         <td>${boardDto.userName}</td>
                         <td>${boardDto.hit}</td>
                         <td>${boardDto.regDate}</td>
-                        <td><input type="checkbox" name="check" class="check" value="${boardDto.no}"></td>
+                        <c:if test="${sessionGrade.label eq 'admin'}">
+                            <td><input type="checkbox" name="check" class="check" value="${boardDto.no}"></td>
+                        </c:if>
                     </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <div class="mt-5 mb-5 d-flex justify-content-end">
-                <button class="btn btn-danger">DELETE-ALL</button>
-            </div>
+            <c:if test="${sessionGrade.label eq 'admin'}">
+                <div class="mt-5 mb-5 d-flex justify-content-end">
+                    <button class="btn btn-danger">DELETE-ALL</button>
+                </div>
+            </c:if>
         </form>
         <form action="../board/search" class="mt-5 mb-5">
             <div class="row g-3 align-items-center">

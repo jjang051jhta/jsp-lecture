@@ -41,9 +41,20 @@
             <c:otherwise>
                 <div class="col-md-3 text-end d-flex  align-items-center">
                     <div class="d-inline-block">
-                        <a href="../member/info?userID=${sessionID}" class="d-block">
-                            <img src="${request.contextPath}/upload/${profile}" class="profile">
-                        </a>
+                        <c:choose>
+                            <c:when test="${not empty profile}">
+                            <a href="../member/info?userID=${sessionID}" class="d-block">
+                                <img src="${request.contextPath}/upload/${profile}" class="profile">
+                            </a>
+                            </c:when>
+                            <c:otherwise>
+                            <a href="../member/info?userID=${sessionID}" class="d-block">
+                                <img src="../images/user.png" class="profile">
+                            </a>
+                            </c:otherwise>
+                        </c:choose>
+
+
                         <%--<span>${sessionName}</span>--%>
                     </div>
                     <a href="../member/logout" class="btn btn-primary mx-2">LOGOUT</a>

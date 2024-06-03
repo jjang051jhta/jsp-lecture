@@ -2,6 +2,7 @@ package com.jjang051.mybatis.controller.member;
 
 import com.jjang051.mybatis.dao.MemberDao;
 
+import com.jjang051.mybatis.dto.Grade;
 import com.jjang051.mybatis.dto.MemberDto;
 import com.jjang051.mybatis.utils.ScriptWriter;
 import jakarta.servlet.ServletException;
@@ -33,7 +34,7 @@ public class InsertMember extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userPW =  req.getParameter("userPw");
+        String userPW =  req.getParameter("userPW");
         String salt = BCrypt.gensalt();
         String hashUserPW = BCrypt.hashpw(userPW,salt);
 
@@ -73,12 +74,12 @@ public class InsertMember extends HttpServlet {
                         .userID(req.getParameter("userID"))
                         .userPW(hashUserPW)
                         .userName(req.getParameter("userName"))
-                        .userEmail(req.getParameter("userEmail"))
+                        .email(req.getParameter("email"))
                         .postCode(Integer.parseInt(req.getParameter("postCode")))
                         .address(req.getParameter("address"))
                         .addressDetail(req.getParameter("addressDetail"))
                         .birth(req.getParameter("birth"))
-                        .grade("member")
+                        .grade(Grade.MEMBER)
                         .originalProfile(fileName)
                         .renameProfile(renameProfile)
                         .build();

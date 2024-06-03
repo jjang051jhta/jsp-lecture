@@ -9,7 +9,7 @@
             #{userID},
             #{userPW},
             #{userName},
-            #{userEmail},
+            #{email},
             #{postCode},
             #{address},
             #{addressDetail},
@@ -23,6 +23,9 @@
         SELECT COUNT(*) AS TOTAL FROM MEMBER WHERE USERID = #{value}
     </select>
     <select id="loginMember" resultType="MemberDto" parameterType="MemberDto">
+        SELECT * FROM MEMBER WHERE USERID = #{userID}
+    </select>
+    <select id="infoMember" resultType="MemberDto" parameterType="String">
         SELECT * FROM MEMBER WHERE USERID = #{userID}
     </select>
 

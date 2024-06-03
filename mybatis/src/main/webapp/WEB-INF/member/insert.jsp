@@ -29,7 +29,7 @@
 
         <div class="mb-3">
             <label for="userEmail" class="form-label">USER EMAIL</label>
-            <input type="email" class="form-control" id="userEmail" placeholder="user email" name="userEmail">
+            <input type="email" class="form-control" id="userEmail" placeholder="user email" name="email">
         </div>
 
         <div class="mb-3">

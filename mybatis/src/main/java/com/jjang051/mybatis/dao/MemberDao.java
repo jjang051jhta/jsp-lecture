@@ -1,5 +1,6 @@
 package com.jjang051.mybatis.dao;
 
+import com.jjang051.mybatis.dto.Grade;
 import com.jjang051.mybatis.dto.MemberDto;
 import com.jjang051.mybatis.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
@@ -26,7 +27,9 @@ public class MemberDao {
     public MemberDto loginMember(MemberDto memberDto) {
         MemberDto loginMemberDto = null;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        //System.out.println("dao memberDto==="+memberDto.getUserPW());
         loginMemberDto = sqlSession.selectOne("loginMember",memberDto); // 1,0
+        System.out.println(loginMemberDto.toString());
         sqlSession.close();
         return loginMemberDto;
     }

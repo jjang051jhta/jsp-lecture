@@ -10,6 +10,10 @@
         <typeAlias alias="SearchDto" type="com.jjang051.mybatis.dto.SearchDto" />
         <typeAlias alias="MemberDto" type="com.jjang051.mybatis.dto.MemberDto" />
     </typeAliases>
+    <!--자바타입이랑 DB타입 맞춰줘야 할때-->
+    <typeHandlers>
+        <typeHandler handler="com.jjang051.mybatis.mybatis.GradeTypeHandler"></typeHandler>
+    </typeHandlers>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
