@@ -17,7 +17,9 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">${modal.title}</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        ${modal.title}
+                    </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -33,7 +35,7 @@
         const modal = new bootstrap.Modal("#modal");
         modal.show();
     </script>
-    <c:remove var="modal" scope="session"/>
+    <c:remove var="modal" scope="session"></c:remove>
 </c:if>
 </body>
 </html>
